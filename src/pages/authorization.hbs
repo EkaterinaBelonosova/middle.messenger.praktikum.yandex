@@ -1,0 +1,31 @@
+---
+{
+    style: [
+        '../components/css/input.css',
+        '../components/css/link.css',
+        './css/authorization.css'
+    ],
+    formInput: [
+        {name: 'login', type: 'text', text: 'Логин'},
+        {name: 'password', type: 'password', text: 'Пароль'},
+    ]
+}
+---
+{{#extend 'layout'}}
+    {{#content 'container'}}
+        <div class="container">
+            <div class="form-auth">
+                <div class="form-header">
+                    <h1 class="form-h1">Вход</h1>
+                </div>
+                {{#each formInput}}
+                    {{> input name=this.name type=this.type text=this.text }}
+                {{/each}}
+                <div class="form-button">
+                    {{> link className="button-link" url="./chats.hbs" text="Авторизоваться"}}
+                    {{> link className="a-link" url="./registration.hbs" text="Регистрация"}}
+                </div>
+            </div>
+        </div>
+    {{/content}}
+{{/extend}}

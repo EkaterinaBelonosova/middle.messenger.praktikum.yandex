@@ -1,0 +1,22 @@
+.input-form-login {
+    position: relative;
+    padding: 10px 20px;
+}
+
+.input-field {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #3369F3;
+    font-size: 13px;
+    /*line-height: 13px;*/
+    padding: 7px 0;
+}
+
+.input-signature {
+    font-size: 9px;
+    color: #999999;
+}
+
+.input-form {
+    padding: 0rem 1rem 0.5rem 1rem;
+}

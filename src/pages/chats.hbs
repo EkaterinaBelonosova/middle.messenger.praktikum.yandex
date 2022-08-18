@@ -1,0 +1,37 @@
+---
+{
+    style: [
+        '../components/css/input.css',
+        '../components/css/link.css',
+        './css/registration.css',
+        './css/authorization.css',
+        './css/chats.css'
+    ],
+    data: [
+        {name: 'Имя', messanges: 'Тест', time: '08:00', count_mess: '3'},
+        {name: 'Имя_2', messanges: 'Тест_2', time: '10:00', count_mess: ''},
+    ]
+}
+---
+{{#extend 'layout'}}
+    {{#content 'container'}}
+        <div class="main-container">
+            <div class="chat-list">
+                <div class="profile">
+                    <a class="profile_link" href="./userSettings.hbs">Профиль ></a>
+                </div>
+                <div class="chat-search">
+                    <input type="text" id="search" name="search" placeholder="Поиск">
+                </div>
+                <div class="chats">
+                    {{#each data}}
+                        {{> chatUser name=this.name messanges=this.messanges time=this.time count_mess=this.count_mess }}
+                    {{/each}}
+                </div>
+            </div>
+            <div class="chat-choice">
+                
+            </div>
+        </div>
+    {{/content}}
+{{/extend}}
