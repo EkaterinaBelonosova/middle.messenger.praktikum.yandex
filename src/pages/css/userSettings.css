@@ -52,7 +52,7 @@
     border: none;
     padding: 7px 0;
     font-size: 13px;
-    background: white;
+    background: var(--white-input);
 }
 
 .profile-info-links {
@@ -60,16 +60,16 @@
 }
 .profile-info-link {
     width: 580px;
-    border-bottom: 1px solid #eaeaea;
+    border-bottom: 1px solid var(--grey-border);
     align-items: center;
     padding: 10px;
     font-size: 13px;
     font-weight: 500;
     line-height: 13px;
     display: flex;
-    color: #3369F3;
+    color: var(--profile-link-blue);
     text-decoration: none;
 }
 .profile-info-link:last-child {
-    color: red;
+    color: var(--profile-link-red);
 }

@@ -6,15 +6,14 @@
 .input-field {
     width: 100%;
     border: none;
-    border-bottom: 1px solid #3369F3;
+    border-bottom: 1px solid var(--profile-link-blue);
     font-size: 13px;
-    /*line-height: 13px;*/
     padding: 7px 0;
 }
 
 .input-signature {
     font-size: 9px;
-    color: #999999;
+    color: var(--grey-link);
 }
 
 .input-form {

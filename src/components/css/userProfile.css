@@ -1,12 +1,6 @@
-.pseudo-input input,
-.pseudo-input input:focus-visible {
-  border-style: none;
-  outline: none;
-}
-
 .pseudo-input {
   padding: 3px;
-  border-bottom: 1px solid #EAEAEA;
+  border-bottom: 1px solid var(--grey-border);
   font-weight: 500;
   font-size: 13px;
   line-height: 13px;
@@ -15,6 +9,6 @@
   align-items: center;
   justify-content: center;
 }
-.pseudo-input span {
+.pseudo-input .pseudo-input-text{
   width: 15%;
 }

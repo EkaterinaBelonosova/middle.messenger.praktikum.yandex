@@ -15,13 +15,13 @@
     margin: -125px 0 0 -125px;
     text-align: center;
 }
-.error h1 {
+.error .h1 {
     font-weight: 500;
     font-size: 40px;
     line-height: 40px;
-    color: #1E1E1E;
+    color: var(--h1-black);
 }
-.error p {
+.error .p {
     font-weight: 500;
     font-size: 20px;
     line-height: 20px;

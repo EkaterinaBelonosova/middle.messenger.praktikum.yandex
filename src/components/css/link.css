@@ -1,8 +1,8 @@
 .button-link {
     height: 37px;
-    color: #fff;
+    color: var(--white);
     text-align: center;
-    background: #3369f3;
+    background: var(--profile-link-blue);
     border-radius: 8px;
     margin: 1rem;
     padding: 0.375rem 0.75rem;
@@ -10,7 +10,7 @@
     line-height: 35px;
 }
 .a-link {
-    color: #3369f3;
+    color: var(--profile-link-blue);
     font-size: 11px;
     line-height: 11px;
     text-align: center;
