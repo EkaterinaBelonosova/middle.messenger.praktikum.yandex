@@ -5,15 +5,6 @@
         '../components/css/link.css',
         './css/registration.css',
         './css/authorization.css'
-    ],
-    formInput: [
-        {name: 'email', type: 'email', text: 'Почта'},
-        {name: 'login', type: 'text', text: 'Логин'},
-        {name: 'first_name', type: 'text', text: 'Имя'},
-        {name: 'second_name', type: 'text', text: 'Фамилия'},
-        {name: 'phone', type: 'tel', text: 'Телефон'},
-        {name: 'password', type: 'password', text: 'Пароль'},
-        {name: 'password2', type: 'password', text: 'Пароль (ещё раз)'},
     ]
 }
 ---
@@ -24,7 +15,7 @@
                 <div class="form-header">
                     <h1 class="form-h1">Регистрация</h1>
                 </div>
-                {{#each formInput}}
+                {{#each registr.formInput}}
                     {{> input name=this.name type=this.type text=this.text }}
                 {{/each}}
                 <div class="form-button">

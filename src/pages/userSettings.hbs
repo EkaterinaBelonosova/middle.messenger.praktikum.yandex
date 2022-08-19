@@ -3,15 +3,7 @@
     style: [
         './css/userSettings.css',
         '../components/css/userProfile.css'
-    ],
-    user: {
-        email: pochta@yandex.ru,
-        login: ivanivanov,
-        name: Иван,
-        second_name: Иванов,
-        display_name: Иван,
-        phone: +7(909)9673030,
-    }
+    ]
 }
 ---
 {{#extend 'layout'}}
@@ -27,12 +19,12 @@
                 <div class="profile-name">{{user.name}}</div>
                 <div class="profile-info">
                     <div class="profile-info-data">
-                        {{> userProfile className="profile-input" name="Почта" value=user.email }}
-                        {{> userProfile className="profile-input" name="Логин" value=user.login }}
-                        {{> userProfile className="profile-input" name="Имя" value=user.name }}
-                        {{> userProfile className="profile-input" name="Фамилия" value=user.second_name }}
-                        {{> userProfile className="profile-input" name="Имя в чате" value=user.display_name }}
-                        {{> userProfile className="profile-input" name="Телефон" value=user.phone }}
+                        {{> userProfile className="profile-input" name="Почта" value=userSetting.user.email }}
+                        {{> userProfile className="profile-input" name="Логин" value=userSetting.user.login }}
+                        {{> userProfile className="profile-input" name="Имя" value=userSetting.user.name }}
+                        {{> userProfile className="profile-input" name="Фамилия" value=userSetting.user.second_name }}
+                        {{> userProfile className="profile-input" name="Имя в чате" value=userSetting.user.display_name }}
+                        {{> userProfile className="profile-input" name="Телефон" value=userSetting.user.phone }}
                     </div>
                     <div class="profile-info-links">
                         {{> link className="profile-info-link" url="#" text="Изменить данные"}}
