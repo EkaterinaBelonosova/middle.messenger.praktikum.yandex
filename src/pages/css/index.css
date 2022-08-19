@@ -1,0 +1,60 @@
+:root {
+    --white: #FBFBFB;
+    --white-input: #ffffff;
+    --grey-link: #999999;
+    --profile-link-blue: #3369F3;
+    --profile-link-red: red;
+    --h1-black: #1E1E1E;
+    --grey-border: #EAEAEA;
+    --grey-search: #EFEFEF;
+}
+body {
+    font-family: 'Inter', sans-serif;
+}
+.container {
+    width: 100%;
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+    margin-right: auto;
+    margin-left: auto;
+}
+.w-s {
+    white-space: break-spaces;
+}
+input::-webkit-input-placeholder {
+    opacity: 1; 
+    transition: opacity 0.3s ease;
+}
+input::-moz-placeholder {
+    opacity: 1; 
+    transition: opacity 0.3s ease;
+}
+input:-moz-placeholder {
+    opacity: 1; 
+    transition: opacity 0.3s ease;
+}
+input:-ms-input-placeholder {
+    opacity: 1; 
+    transition: opacity 0.3s ease;
+}
+input:focus::-webkit-input-placeholder {
+    opacity: 0; 
+    transition: opacity 0.3s ease;
+}
+input:focus::-moz-placeholder {
+    opacity: 0; 
+    transition: opacity 0.3s ease;
+}
+input:focus:-moz-placeholder {
+    opacity: 0; 
+    transition: opacity 0.3s ease;
+}
+input:focus:-ms-input-placeholder {
+    opacity: 0; 
+    transition: opacity 0.3s ease;
+}
+:active, :hover, :focus {
+    outline: 0;
+    outline-offset: 0;
+}
+

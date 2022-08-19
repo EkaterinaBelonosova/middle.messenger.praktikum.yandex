@@ -1,0 +1,14 @@
+.pseudo-input {
+  padding: 3px;
+  border-bottom: 1px solid var(--grey-border);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 13px;
+  width: 580px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pseudo-input .pseudo-input-text{
+  width: 15%;
+}

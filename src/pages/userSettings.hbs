@@ -1,0 +1,38 @@
+---
+{
+    style: [
+        './css/userSettings.css',
+        '../components/css/userProfile.css'
+    ]
+}
+---
+{{#extend 'layout'}}
+    {{#content 'container'}}
+        <div class="row">
+            <div class="return">
+                <a href="./chats.hbs">
+                    <img class="return-img" src="./img/back.jpg" alt="Вернуться к чатам"/>
+                </a>
+            </div>
+            <div class="profile">
+                <div class="profile-avatar"></div>
+                <div class="profile-name">{{user.name}}</div>
+                <div class="profile-info">
+                    <div class="profile-info-data">
+                        {{> userProfile className="profile-input" name="Почта" value=userSetting.user.email }}
+                        {{> userProfile className="profile-input" name="Логин" value=userSetting.user.login }}
+                        {{> userProfile className="profile-input" name="Имя" value=userSetting.user.name }}
+                        {{> userProfile className="profile-input" name="Фамилия" value=userSetting.user.second_name }}
+                        {{> userProfile className="profile-input" name="Имя в чате" value=userSetting.user.display_name }}
+                        {{> userProfile className="profile-input" name="Телефон" value=userSetting.user.phone }}
+                    </div>
+                    <div class="profile-info-links">
+                        {{> link className="profile-info-link" url="#" text="Изменить данные"}}
+                        {{> link className="profile-info-link" url="#" text="Изменить пароль"}}
+                        {{> link className="profile-info-link" url="./index.hbs" text="Выйти"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/content}}
+{{/extend}}

@@ -1,0 +1,24 @@
+---
+{
+    style: [
+        './css/index.css',
+    ],
+    linkArr: [
+        {url: './authorization.hbs', text: 'Авторизация'},
+        {url: './chats.hbs', text: 'Чат'},
+        {url: './registration.hbs', text: 'Регистрация'},
+        {url: './404.hbs', text: '404'},
+        {url: './500.hbs', text: '5**'},
+        {url: './userSettings.hbs', text: 'Настройки пользователя'},
+    ]
+}
+---
+{{#extend 'layout'}}
+    {{#content 'container'}}
+       <div class="container w-s">
+            {{#each linkArr}}
+                {{> link className="a-link" url=this.url text=this.text}}
+            {{/each}}
+        </div>
+    {{/content}}
+{{/extend}}

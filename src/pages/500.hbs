@@ -1,0 +1,13 @@
+---
+{
+    style: [
+        '../components/css/link.css',
+        '../components/css/error.css',
+    ]
+}
+---
+{{#extend 'layout'}}
+    {{#content 'container'}}
+        {{> error errors="500" text="Мы уже фиксим"}}
+    {{/content}}
+{{/extend}}
