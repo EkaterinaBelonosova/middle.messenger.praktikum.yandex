@@ -1,0 +1,17 @@
+.input-form-login {
+    position: relative;
+    padding: 10px 20px;
+}
+
+.input-signature {
+    font-size: 9px;
+    color: var(--grey-link);
+}
+
+.input-form {
+    padding: 0rem 1rem 0.5rem 1rem;
+}
+.error_mess {
+    color: red;
+    font-size: 12px;
+}
