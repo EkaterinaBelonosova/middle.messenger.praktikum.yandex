@@ -6,6 +6,32 @@ import { dataUser } from './data/userSetting';
 import { ErrorPage404 } from './pages/404';
 import { ErrorPage } from './pages/500';
 
+/*const renderDom = (path: string) => {
+  switch(path) {
+    case '/':
+      return new AuthPage({ title: 'Вход' });
+    case '/authorization.hbs':
+      return new AuthPage({ title: 'Вход' });
+    case '/registration.hbs':
+      return new RegPage({ title: 'Регистрация' });
+    case '/chats.hbs':
+      return new ChatsPage({ title: 'Чаты' });
+    case '/userSettings.hbs':
+      return new UserPage({ title: 'Пользователь', user: dataUser }):
+    case '/404.hbs':
+      return new ErrorPage404({ title: '404'});
+    case '/500.hbs':
+      return new ErrorPage({ title: '500'});
+};
+
+export default renderDom;*
+
+window.addEventListener('DOMContentLoaded', () => {
+  const root = document.querySelector('#app')!;
+  const homePage = renderDom();
+  root.append(homePage.getContent()!);
+  homePage.dispatchComponentDidMount();
+});*/
 window.addEventListener('DOMContentLoaded', () => {
   const root = document.querySelector('#app')!;
   const path = document.location.pathname;
