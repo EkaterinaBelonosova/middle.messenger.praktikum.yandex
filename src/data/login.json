@@ -1,6 +1,0 @@
-{
-    "formInput": [
-        {"name": "login", "type": "text", "text": "Логин"},
-        {"name": "password", "type": "password", "text": "Пароль"}
-    ]
-}
