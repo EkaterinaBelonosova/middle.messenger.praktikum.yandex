@@ -3,6 +3,7 @@ import template from './authorization.hbs';
 import { Link } from '../../components/Link';
 import { InputBlock } from '../../components/InputBlock';
 import { validate, validForm } from '../../utils/validators';
+import { RegPage } from '../registration';
 import * as styles from './authorization.css';
 
 interface AuthPageProps {
@@ -37,13 +38,16 @@ export class AuthPage extends Block {
             //url: './chats.hbs',
             url: '#',
             events: {
-                click: () => validForm('form-auth'),
+                click: () => {
+                    validForm('form-auth')
+                },
             },
         });
         this.children.linkSing = new Link({
             text: 'Регистрация',
             className: 'a-link',
             url: './registration.hbs'
+            
         });
     }
     render() {
