@@ -1,6 +1,6 @@
 import Block from '../../utils/Block';
-import template from './input.hbs';
-import * as styles from './input.css';
+import template from './Input.hbs';
+import * as styles from './Input.css';
 
 interface InputProps {
     name: string;
