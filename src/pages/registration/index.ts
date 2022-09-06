@@ -1,9 +1,10 @@
 import Block from '../../utils/Block';
 import template from './registration.hbs';
-import { Link } from '../../components/Link';
+import { Button } from '../../components/Button';
 import { InputBlock } from '../../components/InputBlock';
 import * as styles from './registration.css';
 import { validate, isErrorMes, isDelError, validForm } from '../../utils/validators';
+import renderDom from '../../index';
 
 interface RegPageProps {
     title: string;
@@ -98,19 +99,25 @@ export class RegPage extends Block {
         
             }
         });
-        this.children.linkSing = new Link({
+        this.children.linkSing = new Button({
             text: 'Зарегистрироваться',
-            className: 'button-link',
-            //url: './chats.hbs',
-            url: '#',
+            className: 'a-link-button-blue',
             events: {
-                click: () => validForm('form-registr'),
+                click: () => {
+                    if (validForm('form-registr')) {
+                        renderDom('/chats.hbs')
+                    }   
+                },
             },
         });
-        this.children.linkComeIn = new Link({
+        this.children.linkComeIn = new Button({
             text: 'Войти',
-            className: 'a-link',
-            url: './authorization.hbs'
+            className: 'a-link-button',
+            events: {
+                click: () => {
+                    renderDom('/authorization.hbs')
+                  },
+            }
         });
     }
     render() {

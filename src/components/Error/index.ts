@@ -1,7 +1,8 @@
 import Block from '../../utils/Block';
 import template from './error.hbs';
-import { Link } from '../Link';
+import { Button } from '../Button';
 import * as styles from './error.css';
+import renderDom from '../../index';
 
 interface ErrorProps {
     text: string;
@@ -13,10 +14,14 @@ export class Error extends Block {
     super(props);
   }
   init() {
-    this.children.linkk = new Link({
+    this.children.linkk = new Button({
         text: 'Назад к чатам',
-        className: 'a-link',
-        url: './chats.hbs'
+        className: 'a-link-button',
+        events: {
+          click: () => {
+              renderDom('/chats.hbs')
+            },
+      }
     });
   }
 

@@ -4,7 +4,7 @@ import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
 import { ChatUser } from '../../components/ChatUser';
 import * as styles from './chats.css';
-import { validate, validForm } from '../../utils/validators';
+import renderDom from '../../index';
 
 interface ChatsPageProps {
     title: string;
@@ -43,6 +43,34 @@ export class ChatsPage extends Block {
         text: '>',
         className: 'form-messages-button'
       });
+      this.children.linkProfile = new Button({
+        text: 'Профиль >',
+        className: 'profile_link-button',
+        events: {
+            click: () => {
+                renderDom('/userSettings.hbs')
+              },
+        }
+      });
+      this.children.link404 = new Button({
+        text: '404 страница',
+        className: 'profile_link-button',
+        events: {
+            click: () => {
+                renderDom('/404.hbs')
+              },
+        }
+      });
+      this.children.link500 = new Button({
+        text: '500 страница',
+        className: 'profile_link-button',
+        events: {
+            click: () => {
+                renderDom('/500.hbs')
+              },
+        }
+      });
+      
     }
     render() {
         return this.compile(template, {...this.props, styles });
