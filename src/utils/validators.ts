@@ -39,16 +39,11 @@ const validationRules: Record<string, {reg: RegExp, error: string}> = {
 export function validate(nameInput: string, valueInput: string ) {
     const pattern = validationRules[nameInput].reg
     const regExp = new RegExp(pattern);
-    if (!valueInput) {
-		return console.log(false);
-	}
     const isValid = regExp.test(String(valueInput))
     if (!isValid) {
         isErrorMes(nameInput, validationRules[nameInput].error);
-		return console.log(validationRules[nameInput].error);
 	} else {
         isDelError(nameInput);
-		return console.log(undefined);
 	}
 }
 
@@ -89,7 +84,9 @@ export function validForm(selectorForm: string) {
             arrForm[input.name] = input.value
         }); 
         console.log(arrForm);
+        return true;
     } else {
         isErrorMes(selectorForm, "Все поля должны быть заполнены")
+        return false;
     }
 }

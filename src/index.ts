@@ -5,75 +5,42 @@ import { UserPage } from './pages/userSettings';
 import { dataUser } from './data/userSetting';
 import { ErrorPage404 } from './pages/404';
 import { ErrorPage } from './pages/500';
+import Block from './utils/Block';
 
-/*const renderDom = (path: string) => {
+const renderDom = (path: string) => {
+  let homePage: Block =  new AuthPage({ title: 'Вход' });
   switch(path) {
     case '/':
-      return new AuthPage({ title: 'Вход' });
+      homePage = new AuthPage({ title: 'Вход' });
+      break
     case '/authorization.hbs':
-      return new AuthPage({ title: 'Вход' });
+      homePage = new AuthPage({ title: 'Вход' });
+      break
     case '/registration.hbs':
-      return new RegPage({ title: 'Регистрация' });
+      homePage = new RegPage({ title: 'Регистрация' });
+      break
     case '/chats.hbs':
-      return new ChatsPage({ title: 'Чаты' });
+      homePage = new ChatsPage({ title: 'Чаты' });
+      break
     case '/userSettings.hbs':
-      return new UserPage({ title: 'Пользователь', user: dataUser }):
+      homePage = new UserPage({ title: 'Пользователь', user: dataUser });
+      break
     case '/404.hbs':
-      return new ErrorPage404({ title: '404'});
+      homePage = new ErrorPage404({ title: '404'});
+      break
     case '/500.hbs':
       return new ErrorPage({ title: '500'});
-};
-
-export default renderDom;*
-
-window.addEventListener('DOMContentLoaded', () => {
+      break
+  }
+  
   const root = document.querySelector('#app')!;
-  const homePage = renderDom();
+  root.innerHTML = '';
   root.append(homePage.getContent()!);
   homePage.dispatchComponentDidMount();
-});*/
-window.addEventListener('DOMContentLoaded', () => {
-  const root = document.querySelector('#app')!;
-  const path = document.location.pathname;
-  console.log(path);
-  switch(path) {
-    case '/':
-      const homePage = new AuthPage({ title: 'Вход' });
-      root.append(homePage.getContent()!);
-      homePage.dispatchComponentDidMount();
-      break
-    case '/authorization.hbs':
-      const homePage2 = new AuthPage({ title: 'Вход' });
-      root.append(homePage2.getContent()!);
-      homePage2.dispatchComponentDidMount();
-      break
-    case '/registration.hbs':
-      const Auth = new RegPage({ title: 'Регистрация' });
-      root.append(Auth.getContent()!);   
-      Auth.dispatchComponentDidMount();
-      break
-    case '/chats.hbs':
-      const Chats = new ChatsPage({ title: 'Чаты' });
-      root.append(Chats.getContent()!);   
-      Chats.dispatchComponentDidMount();
-      break
-    case '/userSettings.hbs':
-      const User = new UserPage({ title: 'Пользователь', user: dataUser });
-      root.append(User.getContent()!);   
-      User.dispatchComponentDidMount();
-      break
-    case '/404.hbs':
-      const Error4 = new ErrorPage404({ title: '404'});
-      root.append(Error4.getContent()!);   
-      Error4.dispatchComponentDidMount();
-      break
-    case '/500.hbs':
-      const Error = new ErrorPage({ title: '500'});
-      root.append(Error.getContent()!);   
-      Error.dispatchComponentDidMount();
-      break
+};
 
-  }
+export default renderDom;
 
- 
+document.addEventListener('DOMContentLoaded', () => {
+  renderDom('/');
 });

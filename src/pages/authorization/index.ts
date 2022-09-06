@@ -1,10 +1,10 @@
 import Block from '../../utils/Block';
 import template from './authorization.hbs';
-import { Link } from '../../components/Link';
+import { Button } from '../../components/Button';
 import { InputBlock } from '../../components/InputBlock';
 import { validate, validForm } from '../../utils/validators';
-import { RegPage } from '../registration';
 import * as styles from './authorization.css';
+import renderDom from '../../index';
 
 interface AuthPageProps {
     title: string;
@@ -32,22 +32,25 @@ export class AuthPage extends Block {
                 blur: (e: { target: HTMLInputElement; }) => validate(e.target.name, e.target.value)
               }
         });
-        this.children.linkAuth = new Link({
+        this.children.linkAuth = new Button({
             text: 'Авторизоваться',
-            className: 'button-link',
-            //url: './chats.hbs',
-            url: '#',
+            className: 'a-link-button-blue',
             events: {
                 click: () => {
-                    validForm('form-auth')
+                    if (validForm('form-auth')) {
+                        renderDom('/chats.hbs')
+                    }   
                 },
             },
         });
-        this.children.linkSing = new Link({
+        this.children.linkSing = new Button({
             text: 'Регистрация',
-            className: 'a-link',
-            url: './registration.hbs'
-            
+            className: 'a-link-button',
+            events: {
+                click: () => {
+                    renderDom('/registration.hbs')
+                  },
+            }
         });
     }
     render() {
