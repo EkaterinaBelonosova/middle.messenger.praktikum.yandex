@@ -2,7 +2,9 @@ import Block from '../../utils/Block';
 import template from './userSettings.hbs';
 import { UserProfile } from '../../components/UserProfile';
 import { Link } from '../../components/Link';
+import { Button } from '../../components/Button';
 import * as styles from './userSettings.css';
+import renderDom from '../../index';
 
 
 export interface User {
@@ -73,10 +75,16 @@ export class UserPage extends Block {
         this.children.linkExit = new Link({
             text: 'Выйти',
             className: 'profile-info-link',
-            url: './',
+            url: './'
+        });
+        this.children.linkBack = new Button({
+            text: '<',
+            className: 'a-link-button',
             events: {
-                click: () => console.log('clicked'),
-            },
+                click: () => {
+                    renderDom('/chats.hbs')
+                  },
+            }
         });
     }
     render() {
