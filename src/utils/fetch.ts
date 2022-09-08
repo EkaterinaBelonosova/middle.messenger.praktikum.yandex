@@ -37,7 +37,6 @@ class HTTPTransport {
         console.log(options);
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
-            console.log(xhr);
             xhr.open(method, url);
 
             if (headers) {
