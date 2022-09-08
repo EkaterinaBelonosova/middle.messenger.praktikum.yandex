@@ -1,3 +1,5 @@
+import queryStringify from './queryStringify';
+
 enum Metods {
     Get = 'GET',
     Put = 'PUT', 
@@ -5,7 +7,7 @@ enum Metods {
     Delete = 'DELETE'
 };
 
-interface TypesOptions {
+type TypesOptions = {
     data?: any,
     timeout?: number,
     headers?: any,
@@ -13,32 +15,24 @@ interface TypesOptions {
 
 }
 
-function queryStringify(data: Record<string, string>): string {
-    let str = '?';
-    for (var key in data) {
-        str = str + key + '=' + data[key] + '&'
-    }
-    return str.substr(0, str.length - 1)
-}
-
 class HTTPTransport {
     get = (url: string, options: TypesOptions = {method: Metods.Get}) => {
             if (options && options.data) {
                 url = url + queryStringify(options.data);
             }
-            return this.request(url, options, options.timeout);
+            return this.request(url, options);
     };
     post = (url: string, options: TypesOptions = {method: Metods.Post}) => {
-        return this.request(url, options, options.timeout);
+        return this.request(url, options);
     };
     put = (url: string, options: TypesOptions = {method: Metods.Put}) => {
-        return this.request(url, options, options.timeout);
+        return this.request(url, options);
     };
     delete = (url: string, options: TypesOptions = {method: Metods.Delete}) => {
-        return this.request(url, options, options.timeout);
+        return this.request(url, options);
     };
 
-    request = (url: string, options: TypesOptions, timeout = 5000) => {
+    request = (url: string, options: TypesOptions) => {
         const {headers, data, method} = options;
         console.log(options);
         return new Promise((resolve, reject) => {
@@ -60,14 +54,13 @@ class HTTPTransport {
             xhr.onabort = reject;
             xhr.onerror = reject;
             xhr.ontimeout = reject;
-            xhr.timeout = timeout; 
+            xhr.timeout = (options.timeout) ? options.timeout : 0; 
 
             if (method === Metods.Get|| !data) {               
                 xhr.send();
             } else {
                 xhr.send(data);
             }
-            console.log(xhr);
 
             if (xhr.status !== 200) {
                 console.log( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found

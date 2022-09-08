@@ -6,13 +6,13 @@ import * as styles from './registration.css';
 import { validate, isErrorMes, isDelError, validForm } from '../../utils/validators';
 import renderDom from '../../index';
 
-interface RegPageProps {
+type RegPageProps = {
     title: string;
   }
-export class RegPage extends Block {
-    constructor(props: RegPageProps) {
+export class RegPage extends Block<RegPageProps> {
+    public constructor(props: RegPageProps) {
         super(props);
-      }
+    }
     init() {
         this.children.inputEmail = new InputBlock({
             name: "email", 

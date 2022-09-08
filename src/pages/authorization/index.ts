@@ -6,13 +6,13 @@ import { validate, validForm } from '../../utils/validators';
 import * as styles from './authorization.css';
 import renderDom from '../../index';
 
-interface AuthPageProps {
+type AuthPageProps = {
     title: string;
   }
-export class AuthPage extends Block {
-    constructor(props: AuthPageProps) {
+export class AuthPage extends Block<AuthPageProps> {
+    public constructor(props: AuthPageProps) {
         super(props);
-      }
+    }
     init() {
         this.children.inputLogin = new InputBlock({
             name: "login", 

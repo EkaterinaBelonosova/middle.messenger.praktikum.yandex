@@ -1,7 +1,7 @@
 import { EventBus } from "./EventBus";
 import { nanoid } from 'nanoid';
 
-class Block {
+abstract class Block<Props extends {}> {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
@@ -10,18 +10,18 @@ class Block {
   };
 
   public id = nanoid(6);
-  protected props: any;
-  public children: Record<string, Block>;
+  protected props: Props;
+  public children: Record<string, any>;
   private eventBus: () => EventBus;
   private _element: HTMLElement | null = null;
-  private _meta: { props: any; };
+  private _meta: { props: any };
 
   /** JSDoc
    * @param {Object} props
    *
    * @returns {void}
    */
-  constructor(propsWithChildren: any = {}) {
+   public constructor(propsWithChildren: Props) {
     const eventBus = new EventBus();
 
     const { props, children } = this._getChildrenAndProps(propsWithChildren);
@@ -42,7 +42,7 @@ class Block {
 
   private _getChildrenAndProps(childrenAndProps: any) {
     const props: Record<string, any> = {};
-    const children: Record<string, Block> = {};
+    const children: Record<string, any> = {};
 
     Object.entries(childrenAndProps).forEach(([key, value]) => {
       if (value instanceof Block) {
@@ -56,7 +56,7 @@ class Block {
   }
 
   private _addEvents() {
-    const {events = {}} = this.props as { events: Record<string, () =>void> };
+    const {events = {}} = this.props as any;
     Object.keys(events).forEach(eventName => {
       this._element?.addEventListener(eventName, events[eventName]);
       
@@ -101,7 +101,7 @@ class Block {
     return true;
   }
 
-  setProps = (nextProps: any) => {
+  setProps = (nextProps: Props) => {
     if (!nextProps) {
       return;
     }

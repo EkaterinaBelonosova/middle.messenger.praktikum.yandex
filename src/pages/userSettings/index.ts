@@ -7,7 +7,7 @@ import * as styles from './userSettings.css';
 import renderDom from '../../index';
 
 
-export interface User {
+export type User = {
     email: string;
     login: string;
     name: string;
@@ -16,13 +16,13 @@ export interface User {
     phone: string;
 }
   
-interface UserPageProps {
+type UserPageProps = {
     title: string;
     user: User;
 }
 
-export class UserPage extends Block {
-    constructor(props: UserPageProps) {
+export class UserPage extends Block<UserPageProps> {
+    public constructor(props: UserPageProps) {
         super(props);
     }
     init() {    
