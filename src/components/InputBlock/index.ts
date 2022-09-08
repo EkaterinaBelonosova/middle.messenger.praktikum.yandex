@@ -3,7 +3,7 @@ import template from './inputBlock.hbs';
 import { Input } from '../Input';
 import * as styles from './inputBlock.css';
 
-interface InputBlockProps {
+type InputBlockProps = {
     name: string;
     text: string;
     type: string;
@@ -13,8 +13,8 @@ interface InputBlockProps {
     }
 }
 
-export class InputBlock extends Block {
-  constructor(props: InputBlockProps) {
+export class InputBlock extends Block<InputBlockProps> {
+  public constructor(props: InputBlockProps) {
     super(props);
   }
 

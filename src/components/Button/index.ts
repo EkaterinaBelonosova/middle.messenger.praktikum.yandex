@@ -2,7 +2,7 @@ import Block from '../../utils/Block';
 import template from './button.hbs';
 import * as styles from './button.css';
 
-interface ButtonProps {
+type ButtonProps = {
     text: string;
     className: string;
     events?: {
@@ -10,8 +10,8 @@ interface ButtonProps {
     };
 }
 
-export class Button extends Block {
-  constructor(props: ButtonProps) {
+export class Button extends Block<ButtonProps> {
+  public constructor(props: ButtonProps) {
     super(props);
   }
 

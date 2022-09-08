@@ -4,13 +4,13 @@ import { Button } from '../Button';
 import * as styles from './error.css';
 import renderDom from '../../index';
 
-interface ErrorProps {
+type ErrorProps = {
     text: string;
     errors: string;
 }
 
-export class Error extends Block {
-  constructor(props: ErrorProps) {
+export class Error extends Block<ErrorProps> {
+  public constructor(props: ErrorProps) {
     super(props);
   }
   init() {

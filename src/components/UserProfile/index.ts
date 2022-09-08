@@ -2,14 +2,14 @@ import Block from '../../utils/Block';
 import template from './userProfile.hbs';
 import * as styles from './userProfile.css';
 
-interface UserProfileProps {
+type UserProfileProps = {
     name: string;
     className: string;
     value: string;
 }
 
-export class UserProfile extends Block {
-  constructor(props: UserProfileProps) {
+export class UserProfile extends Block<UserProfileProps> {
+  public constructor(props: UserProfileProps) {
     super(props);
   }
 

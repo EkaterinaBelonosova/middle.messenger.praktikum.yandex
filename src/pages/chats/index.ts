@@ -6,13 +6,14 @@ import { ChatUser } from '../../components/ChatUser';
 import * as styles from './chats.css';
 import renderDom from '../../index';
 
-interface ChatsPageProps {
+type ChatsPageProps = {
     title: string;
-  }
-export class ChatsPage extends Block {
-    constructor(props: ChatsPageProps) {
+}
+
+export class ChatsPage extends Block<ChatsPageProps> {
+    public constructor(props: ChatsPageProps) {
         super(props);
-      }
+    }
     init() {
       this.children.ChatUser = new ChatUser({
         name: "Имя",
