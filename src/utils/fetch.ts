@@ -1,6 +1,4 @@
-import queryStringify from './queryStringify';
-
-enum Metods {
+export enum Metods {
     Get = 'GET',
     Put = 'PUT', 
     Post = 'POST', 
@@ -8,64 +6,73 @@ enum Metods {
 };
 
 type TypesOptions = {
-    data?: any,
-    timeout?: number,
-    headers?: any,
-    method: Metods
+    method?: Metods;
+    data?: any;
+    headers?: any;
+};
 
-}
+export default class HTTPTransport {
+    static API_URL = 'https://ya-praktikum.tech/api/v2';
+    protected endpoint: string;
 
-class HTTPTransport {
-    get = (url: string, options: TypesOptions = {method: Metods.Get}) => {
-            if (options && options.data) {
-                url = url + queryStringify(options.data);
-            }
-            return this.request(url, options);
-    };
-    post = (url: string, options: TypesOptions = {method: Metods.Post}) => {
-        return this.request(url, options);
-    };
-    put = (url: string, options: TypesOptions = {method: Metods.Put}) => {
-        return this.request(url, options);
-    };
-    delete = (url: string, options: TypesOptions = {method: Metods.Delete}) => {
-        return this.request(url, options);
-    };
+    constructor(endpoint: string) {
+        this.endpoint = `${HTTPTransport.API_URL}${endpoint}`;
+    }
+    public get<Response>(path = '/'): Promise<Response>{
+        return this.request(this.endpoint + path);
+    }
+    
+    public post<Response>(path: string, data?: unknown): Promise<Response> {
+        return this.request(this.endpoint + path, {
+        method: Metods.Post,
+        data,
+        });
+    }
+    
+    public delete<Response>(path: string): Promise<Response> {
+        return this.request(this.endpoint + path, {
+        method: Metods.Delete,
+        });
+    }
 
-    request = (url: string, options: TypesOptions) => {
-        const {headers, data, method} = options;
-        console.log(options);
+    public put(path: string, data: unknown): Promise<Response> {
+        return this.request(this.endpoint + path, { data, method: Metods.Put });
+    }
+    
+    private request<Response> (url: string, options: TypesOptions = {method: Metods.Get}): Promise<Response> {
+        const {method, data} = options;
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
-            xhr.open(method, url);
+      xhr.open(method as Metods, url);
 
-            if (headers) {
-                Object.keys(headers).forEach((key) => {
-                   xhr.setRequestHeader(key, headers[key]);
-               });
-            }
-            
-            xhr.onload = function() {
-                resolve(xhr);
-            };
-              
+      xhr.onreadystatechange = (e: any) => {
 
-            xhr.onabort = reject;
-            xhr.onerror = reject;
-            xhr.ontimeout = reject;
-            xhr.timeout = (options.timeout) ? options.timeout : 0; 
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status < 400) {
+            resolve(xhr.response);
+          } else {
+            reject(xhr.response);
+          }
+        }
+      };
 
-            if (method === Metods.Get|| !data) {               
-                xhr.send();
-            } else {
-                xhr.send(data);
-            }
+      xhr.onabort = () => reject({reason: 'abort'});
+      xhr.onerror = () => reject({reason: 'network error'});
+      xhr.ontimeout = () => reject({reason: 'timeout'});
 
-            if (xhr.status !== 200) {
-                console.log( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
-            } else {
-                console.log( xhr.responseText ); // responseText -- текст ответа.
-            }
-        });
-    };
-}
+      //xhr.setRequestHeader('Content-Type', 'application/json');
+
+      xhr.withCredentials = true;
+      xhr.responseType = 'json';
+
+      if (method === Metods.Get || !data) {
+        xhr.send();
+      } else if (data instanceof FormData) {
+        xhr.send(data);
+      } else {
+        xhr.send(JSON.stringify(data));
+      }
+    });
+  }
+    }
+   

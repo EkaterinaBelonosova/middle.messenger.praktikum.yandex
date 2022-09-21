@@ -1,22 +1,22 @@
 import { EventBus } from "./EventBus";
 import { nanoid } from 'nanoid';
 
-abstract class Block<Props extends {}> {
+class Block<Props extends Record<string, any> = any> {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
     FLOW_CDU: "flow:component-did-update",
     FLOW_RENDER: "flow:render"
-  };
+  } as const;
 
   public id = nanoid(6);
   protected props: Props;
   public children: Record<string, any>;
   private eventBus: () => EventBus;
   private _element: HTMLElement | null = null;
-  private _meta: { props: any };
 
   /** JSDoc
+   * @param {string} tagName
    * @param {Object} props
    *
    * @returns {void}
@@ -25,10 +25,6 @@ abstract class Block<Props extends {}> {
     const eventBus = new EventBus();
 
     const { props, children } = this._getChildrenAndProps(propsWithChildren);
-    
-    this._meta = {
-      props
-    };
 
     this.children = children;
     this.props = this._makePropsProxy(props);
@@ -40,7 +36,7 @@ abstract class Block<Props extends {}> {
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  private _getChildrenAndProps(childrenAndProps: any) {
+  private _getChildrenAndProps(childrenAndProps: Props): { props: Props, children: Record<string, Block>} {
     const props: Record<string, any> = {};
     const children: Record<string, any> = {};
 
@@ -52,11 +48,11 @@ abstract class Block<Props extends {}> {
       }
     });
 
-    return { props, children };
+    return { props: props as Props, children };
   }
 
   private _addEvents() {
-    const {events = {}} = this.props as any;
+    const {events = {}} = this.props as Props & { events: Record<string, () => void> };
     Object.keys(events).forEach(eventName => {
       this._element?.addEventListener(eventName, events[eventName]);
       
@@ -91,13 +87,13 @@ abstract class Block<Props extends {}> {
     Object.values(this.children).forEach(child => child.dispatchComponentDidMount());
   }
 
-  private _componentDidUpdate(oldProps: any, newProps: any) {
+  private _componentDidUpdate(oldProps: Props, newProps: Props) {
     if (this.componentDidUpdate(oldProps, newProps)) {
       this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
   }
 
-  protected componentDidUpdate(oldProps: any, newProps: any) {
+  protected componentDidUpdate(oldProps: Props, newProps: Props) {
     return true;
   }
 
@@ -187,10 +183,6 @@ abstract class Block<Props extends {}> {
         throw new Error("Нет доступа");
       }
     });
-  }
-
-  private _createDocumentElement(tagName: string) {
-    return document.createElement(tagName);
   }
 
   show() {

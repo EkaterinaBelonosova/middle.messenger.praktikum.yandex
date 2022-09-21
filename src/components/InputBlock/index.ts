@@ -26,7 +26,7 @@ export class InputBlock extends Block<InputBlockProps> {
         events: this.props.events,
     });
   }
-
+  
   render() {
     return this.compile(template, { ...this.props, styles });
   }

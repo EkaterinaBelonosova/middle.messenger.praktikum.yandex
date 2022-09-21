@@ -1,169 +1,116 @@
-class Block {
-    getContent() { }
-    
-    show() {
-      console.log('show');
-    }
-    
-    hide() {
-      console.log('hide');
+import Block from './Block';
+
+function isEqual(lhs: string, rhs: string): boolean {
+  return lhs === rhs;
+}
+
+function render(query: string, block: Block) {
+  const root = document.querySelector(query);
+
+  if (root === null) {
+    throw new Error(`root not found by selector "${query}"`);
+  }
+
+  root.innerHTML = '';
+
+  root.append(block.getContent()!);
+
+  return root;
+}
+
+class Route {
+  private block: Block | null = null;
+
+  constructor(
+    private pathname: string,
+    private readonly blockClass: typeof Block,
+    private readonly query: string) {
+  }
+
+  leave() {
+    this.block = null;
+  }
+
+  match(pathname: string) {
+    return isEqual(pathname, this.pathname);
+  }
+
+  render() {
+    if (!this.block) {
+      this.block = new this.blockClass({});
+
+      render(this.query, this.block);
+      return;
     }
   }
-  
-  class Chats extends Block {
-    getContent() {
-      return 'chats';
+}
+
+class Router {
+  private static __instance: Router;
+  private routes: Route[] = [];
+  private currentRoute: Route | null = null;
+  private history = window.history;
+
+  constructor(private readonly rootQuery: string) {
+    if (Router.__instance) {
+      return Router.__instance;
     }
-    
-    show() {
-      console.log('show chats');
+
+    this.routes = [];
+
+    Router.__instance = this;
+  }
+
+  public use(pathname: string, block: typeof Block) {
+    const route = new Route(pathname, block, this.rootQuery);
+    this.routes.push(route);
+
+    return this;
+  }
+
+  public start() {
+    window.onpopstate = (event: PopStateEvent) => {
+      const target = event.currentTarget as Window;
+
+      this._onRoute(target.location.pathname);
     }
-    
-    hide() {
-      console.log('hide chats');
+
+    this._onRoute(window.location.pathname);
+  }
+
+  private _onRoute(pathname: string) {
+    const route = this.getRoute(pathname);
+
+    if (!route) {
+      return;
     }
-  }
-  
-  class Users extends Block {
-    getContent() {
-      return 'users';
+
+    if (this.currentRoute && this.currentRoute !== route) {
+      this.currentRoute.leave();
     }
-    
-    show() {
-      console.log('show users');
-    }
-    
-    hide() {
-      console.log('hide users');
-    }
+
+    this.currentRoute = route;
+
+    route.render();
   }
-  
-  function isEqual(lhs, rhs) {
-    return lhs === rhs;
+
+  public go(pathname: string) {
+    this.history.pushState({}, '', pathname);
+
+    this._onRoute(pathname);
   }
-  
-  function render(query, block) {
-    const root = document.querySelector(query);
-    root.textContent = block.getContent();
-    return root;
+
+  public back() {
+    this.history.back();
   }
-  
-  class Route {
-      constructor(pathname, view, props) {
-          this._pathname = pathname;
-          this._blockClass = view;
-          this._block = null;
-          this._props = props;
-      }
-  
-      navigate(pathname) {
-          if (this.match(pathname)) {
-              this._pathname = pathname;
-              this.render();
-          }
-      }
-  
-      leave() {
-          if (this._block) {
-              this._block.hide();
-          }
-      }
-  
-      match(pathname) {
-          return isEqual(pathname, this._pathname);
-      }
-  
-      render() {
-          if (!this._block) {
-              this._block = new this._blockClass();
-              render(this._props.rootQuery, this._block);
-              return;
-          }
-  
-          this._block.show();
-      }
+
+  public forward() {
+    this.history.forward();
   }
-  
-  class Router {
-      constructor(rootQuery) {
-          if (Router.__instance) {
-              return Router.__instance;
-          }
-  
-          this.routes = [];
-          this.history = window.history;
-          this._currentRoute = null;
-          this._rootQuery = rootQuery;
-  
-          Router.__instance = this;
-      }
-  
-      use(pathname, block) {
-          const route = new Route(pathname, block, {rootQuery: this._rootQuery});
-          this.routes.push(route);
-          return this;
-      }
-  
-      start() {
-        // Реагируем на изменения в адресной строке и вызываем перерисовку
-        window.onpopstate = event => {
-          this._onRoute(event.currentTarget.location.pathname);
-        };
-    
-        this._onRoute(window.location.pathname);
-      }
-  
-      _onRoute(pathname) {
-          const route = this.getRoute(pathname);
-  
-          if (this._currentRoute) {
-            this._currentRoute.leave();
-          }
-  
-          this._currentRoute = route;
-          route.render(route, pathname);
-      }
-  
-      go(pathname) {
-        this.history.pushState({}, "", pathname);
-        this._onRoute(pathname);
-      }
-  
-      back() {
-        this.history.back(); // работает как кнопка «Назад»
-      }
-  
-      forward() {
-        this.history.forward(); // работает как кнопка «Вперёд»
-      }
-  
-      getRoute(pathname) {
-          return this.routes.find(route => route.match(pathname));
-      }
+
+  private getRoute(pathname: string) {
+    return this.routes.find(route => route.match(pathname));
   }
-  
-  // Необходимо оставить в силу особенностей тренажёра
-  history.pushState({}, '', '/');
-  
-  const router = new Router(".app");
-  
-  // Можно обновиться на /user и получить сразу пользователя
-  router
-    .use("/", Chats)
-    .use("/users", Users)
-    .start();
-  
-  // Через секунду контент изменится сам, достаточно дёрнуть переход
-  setTimeout(() => {
-    router.go("/users");
-  }, 1000);
-  
-  // А можно и назад
-  setTimeout(() => {
-    router.back();
-  }, 3000);
-  
-  // И снова вперёд
-  setTimeout(() => {
-    router.forward();
-  }, 5000);
+}
+
+export default new Router('#app');

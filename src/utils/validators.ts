@@ -90,3 +90,12 @@ export function validForm(selectorForm: string) {
         return false;
     }
 }
+export function validFormData(selectorForm: string) {
+    const form = document.querySelector("." + selectorForm) as HTMLDivElement;
+    const inputs = form.querySelectorAll('input');
+    let arrForm: any = {};
+    inputs.forEach((input) => {
+        arrForm[input.name] = input.value
+    }); 
+    return arrForm;
+}

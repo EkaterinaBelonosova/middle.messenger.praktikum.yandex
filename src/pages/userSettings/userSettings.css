@@ -72,4 +72,7 @@
 }
 .profile-info-link:last-child {
     color: var(--profile-link-red);
+    background: none;
+    border: none;
+    cursor: pointer;
 }

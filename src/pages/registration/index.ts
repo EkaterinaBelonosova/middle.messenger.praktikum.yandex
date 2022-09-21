@@ -1,17 +1,17 @@
 import Block from '../../utils/Block';
 import template from './registration.hbs';
 import { Button } from '../../components/Button';
+import { LinkBase } from '../../components/LinkBase';
 import { InputBlock } from '../../components/InputBlock';
+import { Input } from '../../components/Input';
 import * as styles from './registration.css';
-import { validate, isErrorMes, isDelError, validForm } from '../../utils/validators';
-import renderDom from '../../index';
+import { validate, isErrorMes, isDelError, validForm, validFormData  } from '../../utils/validators';
+import { SignupData } from '../../api/AuthAPI';
+import AuthController from '../../controllers/AuthController';
 
-type RegPageProps = {
-    title: string;
-  }
-export class RegPage extends Block<RegPageProps> {
-    public constructor(props: RegPageProps) {
-        super(props);
+export class RegPage extends Block {
+    public constructor() {
+        super({});
     }
     init() {
         this.children.inputEmail = new InputBlock({
@@ -50,6 +50,15 @@ export class RegPage extends Block<RegPageProps> {
                 blur: (e: { target: HTMLInputElement; }) => validate(e.target.name, e.target.value)
               },
         });
+        this.children.inputPhone = new InputBlock({
+            name: "phone", 
+            type: "tel", 
+            text: "Телефон",
+            events: {
+                focus: (e: { target: HTMLInputElement; }) => validate(e.target.name, e.target.value),
+                blur: (e: { target: HTMLInputElement; }) => validate(e.target.name, e.target.value)
+              }
+          });
         this.children.inputPass = new InputBlock({
             name: "password", 
             type: "password", 
@@ -105,20 +114,20 @@ export class RegPage extends Block<RegPageProps> {
             events: {
                 click: () => {
                     if (validForm('form-registr')) {
-                        renderDom('/chats.hbs')
+                        this.onSubmit()
                     }   
                 },
             },
         });
-        this.children.linkComeIn = new Button({
-            text: 'Войти',
-            className: 'a-link-button',
-            events: {
-                click: () => {
-                    renderDom('/authorization.hbs')
-                  },
-            }
-        });
+        this.children.linkComeIn = new LinkBase({
+            label: 'Войти',
+            to: '/',
+            className: 'a-link-button'
+          });
+    }
+    onSubmit() {
+        const data = validFormData('form-registr');
+        AuthController.signup(data as SignupData);
     }
     render() {
         return this.compile(template, {...this.props, styles });
