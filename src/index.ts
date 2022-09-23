@@ -2,6 +2,9 @@ import { AuthPage } from './pages/authorization';
 import { RegPage } from './pages/registration';
 import { UserPage } from './pages/userSettings';
 import { EditAvatar } from './pages/userSettings/changeAvatar';
+import { EditPassword } from './pages/userSettings/changePassword';
+import { UserEditPage } from './pages/userSettings/changeSettings';
+import { ChatsPageS } from './pages/chats';
 import Router from './utils/Router';
 import store from './utils/Store';
 import AuthController from './controllers/AuthController';
@@ -9,11 +12,12 @@ import AuthController from './controllers/AuthController';
 
 enum Routes {
   Index = '/',
-  Register = '/register',
-  Profile = '/profile',
-  Avatar = '/profile/change-avatar',
-  PassWord = '/profile/change-pass',
-  EditProfile = '/profile/change-profile'
+  Register = '/sign-up',
+  Profile = '/settings',
+  Avatar = '/settings/change-avatar',
+  PassWord = '/settings/change-pass',
+  EditProfile = '/settings/change-profile',
+  Chats =  '/messenger',
 }
 
 window.addEventListener('DOMContentLoaded', async () => {
@@ -22,6 +26,9 @@ window.addEventListener('DOMContentLoaded', async () => {
     .use(Routes.Register, RegPage)
     .use(Routes.Profile, UserPage)
     .use(Routes.Avatar, EditAvatar)
+    .use(Routes.PassWord, EditPassword)
+    .use(Routes.EditProfile, UserEditPage)
+    .use(Routes.Chats, ChatsPageS)
 
   let isProtectedRoute = true;
 

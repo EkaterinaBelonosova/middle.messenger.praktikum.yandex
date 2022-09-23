@@ -27,24 +27,24 @@ export interface User {
 
 export class AuthAPI extends BaseAPI {
   constructor() {
-    super('/auth');
+    super();
   }
 
   signin(data: SigninData) {
-    return this.http.post('/signin', data);
+    return this.http.post('/auth/signin', data);
   }
 
 
   signup(data: SignupData) {
-    return this.http.post('/signup', data);
+    return this.http.post('/auth/signup', data);
   }
 
   read(): Promise<User> {
-    return this.http.get('/user');
+    return this.http.get('/auth/user');
   }
 
   logout() {
-    return this.http.post('/logout');
+    return this.http.post('/auth/logout');
   }
 
   create = undefined;

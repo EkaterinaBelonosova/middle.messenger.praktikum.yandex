@@ -3,6 +3,7 @@ import template from './changeAvatar.hbs';
 import { Button } from '../../../components/Button';
 import UserController from '../../../controllers/UserController';
 import AuthController from '../../../controllers/AuthController';
+import { withStore } from '../../../utils/Store';
 import { Link } from '../../../components/Link';
 import * as styles from '../userSettings.css';
 
@@ -30,7 +31,7 @@ export class EditAvatar extends Block<any> {
         });
 
         this.children.linkBack = new Button({
-            text: '<',
+            text: 'Назад',
             className: 'a-link-button',
             events: {
                 click: () => {
@@ -43,3 +44,7 @@ export class EditAvatar extends Block<any> {
         return this.compile(template, {...this.props, styles });
     }
 }
+
+const withUser = withStore((state) => ({ ...state.user }))
+
+export const UserPage = withUser(EditAvatar);

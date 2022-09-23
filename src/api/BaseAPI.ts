@@ -3,8 +3,8 @@ import HTTPTransport from '../utils/fetch';
 export default abstract class BaseAPI {
   protected http: HTTPTransport;
 
-  protected constructor(endpoint: string) {
-    this.http = new HTTPTransport(endpoint);
+  protected constructor() {
+    this.http = new HTTPTransport();
   }
 
   public abstract create?(data: unknown): Promise<unknown>;

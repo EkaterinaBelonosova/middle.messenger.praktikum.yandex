@@ -11,33 +11,39 @@ export class UserController {
 
   async editAvatar(data: any) {
     try {
-      await this.api.editAvatar(data);
-      router.go('/profile');
+      this.api.editAvatar(data);
+      router.go('/settings');
+      setTimeout(() => location.reload(), 500);
     } catch (e: any) {
       console.error(e);
     }
   }
-
+  
   async editUser(data: EditUser) {
     try {
-      await this.api.editUser(data);
-      router.go('/profile');
+      const changedData = await this.api.editUser(data);
+      if (changedData) {
+          await this.fetchUser();
+          router.go('/settings');
+      }
     } catch (e: any) {
       console.error(e);
     }
   }
   async editPass(data: EditPass) {
-    try {
-      await this.api.editPass(data);
-      router.go('/profile');
-    } catch (e: any) {
-      console.error(e);
-    }
+    this.api.editPass(data)
+      .then(() => {
+        router.go('/settings');
+      })
+      .catch((e) => {
+        alert(e.reason)
+      })
   }
+  
 
   async avatarEdit() {
     try {
-      router.go('/profile/change-avatar');
+      router.go('/settings/change-avatar');
     } catch (e: any) {
       console.error(e);
     }
@@ -45,18 +51,30 @@ export class UserController {
 
   async passEdit() {
     try {
-      router.go('/profile/change-pass');
+      router.go('/settings/change-pass');
     } catch (e: any) {
-      console.error(e.message);
+      console.error(e);
     }
   }
 
   async userEdit() {
     try {
-      router.go('/profile/change-profile');
+      router.go('/settings/change-profile');
     } catch (e: any) {
-      console.error(e.message);
+      console.error(e);
     }
+  }
+  async messenger() {
+    try {
+      router.go('/messenger');
+    } catch (e: any) {
+      console.error(e);
+    }
+  }
+
+  async fetchUser() {
+    const user = await this.api.read();
+    store.set('user', user);
   }
 
 }

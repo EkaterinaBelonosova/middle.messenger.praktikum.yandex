@@ -1,5 +1,6 @@
 import { EventBus } from "./EventBus";
 import { nanoid } from 'nanoid';
+import { isEqual } from './helpers';
 
 class Block<Props extends Record<string, any> = any> {
   static EVENTS = {
@@ -30,7 +31,7 @@ class Block<Props extends Record<string, any> = any> {
     this.props = this._makePropsProxy(props);
 
     this.eventBus = () => eventBus;
-
+    this.initChildren();
     this._registerEvents(eventBus);
 
     eventBus.emit(Block.EVENTS.INIT);
@@ -93,9 +94,22 @@ class Block<Props extends Record<string, any> = any> {
     }
   }
 
-  protected componentDidUpdate(oldProps: Props, newProps: Props) {
+  protected componentDidUpdate(oldProps?: Props, newProps?: Props) {
     return true;
   }
+  /*private _componentDidUpdate(oldProps: any, newProps: any) {
+    const response = this.componentDidUpdate(oldProps, newProps);
+    if (response) {
+      this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+    }
+    if (!response) return;
+
+    this._render();
+  }
+
+  protected componentDidUpdate(oldProps: any, newProps: any) {
+    return !isEqual(oldProps, newProps);
+  }*/
 
   setProps = (nextProps: Props) => {
     if (!nextProps) {
@@ -110,6 +124,8 @@ class Block<Props extends Record<string, any> = any> {
   }
 
   private _render() {
+    this.initChildren();
+    
     const fragment = this.render();
 
     const newElement = fragment.firstElementChild as HTMLElement;
@@ -122,6 +138,7 @@ class Block<Props extends Record<string, any> = any> {
 
     this._addEvents();
   }
+  protected initChildren() {}
 
   protected render(): DocumentFragment {
     return new DocumentFragment();

@@ -11,6 +11,7 @@ type InputProps = {
       blur?: (e: { target: HTMLInputElement; }) => void;
       focus?: (e: { target: HTMLInputElement; }) => void;
     };
+    value?: string;
 }
 
 export class Input extends Block<InputProps> {

@@ -20,8 +20,7 @@ export type User = {
 }
 
 class UserPageBase extends Block {
-    init() {   
-        AuthController.fetchUser();
+    protected initChildren() {   
         this.children.avatar = new Avatar({
             link: `https://ya-praktikum.tech/api/v2/resources${this.props?.avatar}`,
             events: {
@@ -63,18 +62,20 @@ class UserPageBase extends Block {
         this.children.linkEditData = new Link({
             text: 'Изменить данные',
             className: 'profile-info-link',
-            url: "#",
             events: {
-                click: () => console.log('clicked'),
+                click: () => {
+                    UserController.userEdit();
+                }
             },
         });
         this.children.linkEditPass = new Link({
             text: 'Изменить пароль',
             className: 'profile-info-link',
-            url: "#",
             events: {
-                click: () => console.log('clicked'),
-            },
+                click: () => {
+                  UserController.passEdit();
+                }
+            }
         });
         this.children.linkExit = new Button({
             text: 'Выйти',
@@ -90,7 +91,7 @@ class UserPageBase extends Block {
             className: 'a-link-button',
             events: {
                 click: () => {
-                    AuthController.back();
+                    UserController.messenger();
                   }
             }
         });

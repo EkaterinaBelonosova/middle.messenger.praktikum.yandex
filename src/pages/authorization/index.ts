@@ -46,7 +46,7 @@ export class AuthPage extends Block {
         });
         this.children.linkSing = new LinkBase({
             label: 'Регистрация',
-            to: '/register',
+            to: '/sign-up',
             className: 'a-link-button'
           });
     }

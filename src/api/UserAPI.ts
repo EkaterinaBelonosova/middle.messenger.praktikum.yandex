@@ -25,26 +25,26 @@ export interface User {
 
 export class UserAPI extends BaseAPI {
   constructor() {
-    super('/user');
+    super();
   }
 
   editUser(data: EditUser) {
-    return this.http.put('/profile', { data });
+    return this.http.put('/user/profile', data);
   }
 
   editAvatar(data: any) {
-    return this.http.put('/profile/avatar', data);
+    return this.http.put('/user/profile/avatar', data);
   }
 
   editPass(data: EditPass) {
-    return this.http.put('/password', { data });
+    return this.http.put('/user/password', data );
   }
 
-  /*read(): Promise<User> {
-    return this.http.get('');
-  }*/
+  read(): Promise<User> {
+    return this.http.get('/auth/user');
+  }
   
-  read = undefined;
+  //read = undefined;
   create = undefined;
   update = undefined;
   delete = undefined;

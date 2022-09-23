@@ -3,17 +3,13 @@ import template from './chats.hbs';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
 import { ChatUser } from '../../components/ChatUser';
+import { withStore } from '../../utils/Store';
+import UserController from '../../controllers/UserController';
+import AuthController from '../../controllers/AuthController';
 import * as styles from './chats.css';
-import renderDom from '../../index';
 
-type ChatsPageProps = {
-    title: string;
-}
 
-export class ChatsPage extends Block<ChatsPageProps> {
-    public constructor(props: ChatsPageProps) {
-        super(props);
-    }
+class ChatsPage extends Block {
     init() {
       this.children.ChatUser = new ChatUser({
         name: "Имя",
@@ -49,7 +45,7 @@ export class ChatsPage extends Block<ChatsPageProps> {
         className: 'profile_link-button',
         events: {
             click: () => {
-                renderDom('/userSettings.hbs')
+                
               },
         }
       });
@@ -58,7 +54,7 @@ export class ChatsPage extends Block<ChatsPageProps> {
         className: 'profile_link-button',
         events: {
             click: () => {
-                renderDom('/404.hbs')
+               
               },
         }
       });
@@ -67,7 +63,7 @@ export class ChatsPage extends Block<ChatsPageProps> {
         className: 'profile_link-button',
         events: {
             click: () => {
-                renderDom('/500.hbs')
+                
               },
         }
       });
@@ -77,3 +73,14 @@ export class ChatsPage extends Block<ChatsPageProps> {
         return this.compile(template, {...this.props, styles });
     }
 }
+
+
+const withChats = withStore((state) => ({ 
+  chatsStore: state.allChats,
+  chatId: state.chatId,
+  token: state.token,
+  currentUser: state.currentUser,
+  currentChat: state.chat, 
+}))
+
+export const ChatsPageS = withChats(ChatsPage);
