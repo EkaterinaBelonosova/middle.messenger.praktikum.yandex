@@ -149,19 +149,29 @@ class Block<Props extends Record<string, any> = any> {
 
     const contextAndStubs = { ...context };
     
-    Object.entries(this.children).forEach(([name, component]) => {
+    /*Object.entries(this.children).forEach(([name, component]) => {
       if (Array.isArray(component)) {
         contextAndStubs[name] = component.map((item) => `<div data-id="${item.id}"></div>`);
       }
       contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
+    });*/
+    
+
+    Object.entries(this.children).forEach(([key, child]: [string, Block<Props>]) => {
+      if (Array.isArray(child)) {
+        contextAndStubs[key] = child.map((item) => `<div data-id="${item.id}"></div>`);
+        return;
+      }
+      contextAndStubs[key] = `<div data-id="${child.id}"></div>`;
     });
+
     const temp = document.createElement('template');
+    //const html = template(contextAndStubs);
 
-    const html = template(contextAndStubs);
+    //temp.innerHTML = html;
+    temp.innerHTML = template(contextAndStubs).split(',').join('');
 
-    temp.innerHTML = html;
-
-    Object.entries(this.children).forEach(([_, component]) => {
+    /*Object.entries(this.children).forEach(([_, component]) => {
       const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
       
       if (!stub) {
@@ -172,7 +182,23 @@ class Block<Props extends Record<string, any> = any> {
 
       stub.replaceWith(component.getContent()!);
 
+    });*/
+
+    Object.values(this.children).forEach((child: Block<Props>) => {
+      if (Array.isArray(child)) {
+        child.map((item) => {
+          const stub = temp.content.querySelector(`[data-id="${item.id}"]`);
+          if (!stub) return;
+
+          stub.replaceWith(item.getContent()!);
+        });
+        return;
+      }
+      const stub = temp.content.querySelector(`[data-id="${child.id}"]`) as HTMLElement;
+      if (!stub) return;
+      stub.replaceWith(child.getContent()!);
     });
+
     return temp.content;
   }
 
@@ -188,12 +214,11 @@ class Block<Props extends Record<string, any> = any> {
         const value = target[prop];
         return typeof value === "function" ? value.bind(target) : value;
       },
-      set(target, prop, value) {
-        const oldTarget = { ...target }
-
+      set(target: any, prop, value) {
+        //const oldTarget = { ...target }
         target[prop] = value;
 
-        self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
+        self.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
         return true;
       },
       deleteProperty() {

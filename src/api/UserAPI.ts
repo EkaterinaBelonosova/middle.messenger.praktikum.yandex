@@ -13,7 +13,7 @@ export interface EditUser {
   phone: string;
 }
 export interface User {
-  id: number;
+  id?: number;
   first_name: string;
   second_name: string;
   login: string;

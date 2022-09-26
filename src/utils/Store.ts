@@ -7,6 +7,8 @@ export enum StoreEvents {
 }
 
 export class Store extends EventBus {
+  /*private _state: any = {};
+  state: any = {};*/
   private state: any = {};
 
   public set(keypath: string, data: unknown) {
@@ -22,7 +24,6 @@ export class Store extends EventBus {
 const store = new Store();
 
 export function withStore(mapStateToProps: (state: any) => any) {
-
   return function wrap(Component: typeof Block){
     let previousState: any;
 

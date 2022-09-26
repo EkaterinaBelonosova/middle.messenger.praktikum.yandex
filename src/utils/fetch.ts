@@ -29,13 +29,14 @@ export default class HTTPTransport {
         });
     }
     
-    public delete<Response>(path: string): Promise<Response> {
+    public delete<Response>(path: string, data?: unknown): Promise<Response> {
         return this.request(this.endpoint + path, {
         method: Metods.Delete,
+        data
         });
     }
 
-    public put(path: string, data: unknown): Promise<Response> {
+    public put<Response>(path: string, data: unknown): Promise<Response> {
         return this.request(this.endpoint + path, { data, method: Metods.Put });
     }
     
@@ -66,7 +67,7 @@ export default class HTTPTransport {
             xhr.responseType = 'json';
 
             if (method === Metods.Get || !data) {
-              //xhr.setRequestHeader('Content-Type', 'application/json');    
+          
               xhr.send();
             } else if (data instanceof FormData) {
               xhr.send(data);

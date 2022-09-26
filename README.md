@@ -9,4 +9,4 @@
 
 Деплой на Netlify: https://legendary-treacle-770609.netlify.app
 
-Ссылка на pull request https://github.com/EkaterinaBelonosova/middle.messenger.praktikum.yandex/pull/2
+Ссылка на pull request https://github.com/EkaterinaBelonosova/middle.messenger.praktikum.yandex/pull/3

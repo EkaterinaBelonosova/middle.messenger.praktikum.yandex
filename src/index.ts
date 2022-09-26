@@ -8,6 +8,7 @@ import { ChatsPageS } from './pages/chats';
 import Router from './utils/Router';
 import store from './utils/Store';
 import AuthController from './controllers/AuthController';
+import ChatController from './controllers/ChatController';
 
 
 enum Routes {
@@ -40,11 +41,12 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
   try {
     await AuthController.fetchUser();
+    await ChatController.getChats();
 
     Router.start();
  
     if (!isProtectedRoute) {
-      Router.go(Routes.Profile)
+      Router.go(Routes.Chats)
     }
   } catch (e) {
     Router.start();
