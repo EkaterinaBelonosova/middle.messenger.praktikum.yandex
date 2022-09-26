@@ -1,46 +1,59 @@
 import { AuthPage } from './pages/authorization';
 import { RegPage } from './pages/registration';
-import { ChatsPage } from './pages/chats';
 import { UserPage } from './pages/userSettings';
-import { dataUser } from './data/userSetting';
-import { ErrorPage404 } from './pages/404';
-import { ErrorPage } from './pages/500';
-import Block from './utils/Block';
+import { EditAvatar } from './pages/userSettings/changeAvatar';
+import { EditPassword } from './pages/userSettings/changePassword';
+import { UserEditPage } from './pages/userSettings/changeSettings';
+import { ChatsPageS } from './pages/chats';
+import Router from './utils/Router';
+import store from './utils/Store';
+import AuthController from './controllers/AuthController';
+import ChatController from './controllers/ChatController';
 
-const renderDom = (path: string) => {
-  let homePage: Block =  new AuthPage({ title: 'Вход' });
-  switch(path) {
-    case '/':
-      homePage = new AuthPage({ title: 'Вход' });
-      break
-    case '/authorization.hbs':
-      homePage = new AuthPage({ title: 'Вход' });
-      break
-    case '/registration.hbs':
-      homePage = new RegPage({ title: 'Регистрация' });
-      break
-    case '/chats.hbs':
-      homePage = new ChatsPage({ title: 'Чаты' });
-      break
-    case '/userSettings.hbs':
-      homePage = new UserPage({ title: 'Пользователь', user: dataUser });
-      break
-    case '/404.hbs':
-      homePage = new ErrorPage404({ title: '404'});
-      break
-    case '/500.hbs':
-      return new ErrorPage({ title: '500'});
-      break
+
+enum Routes {
+  Index = '/',
+  Register = '/sign-up',
+  Profile = '/settings',
+  Avatar = '/settings/change-avatar',
+  PassWord = '/settings/change-pass',
+  EditProfile = '/settings/change-profile',
+  Chats =  '/messenger',
+}
+
+window.addEventListener('DOMContentLoaded', async () => {
+  Router
+    .use(Routes.Index, AuthPage)
+    .use(Routes.Register, RegPage)
+    .use(Routes.Profile, UserPage)
+    .use(Routes.Avatar, EditAvatar)
+    .use(Routes.PassWord, EditPassword)
+    .use(Routes.EditProfile, UserEditPage)
+    .use(Routes.Chats, ChatsPageS)
+
+  let isProtectedRoute = true;
+
+  switch (window.location.pathname) {
+    case Routes.Index:
+    case Routes.Register:
+      isProtectedRoute = false;
+      break;
   }
-  
-  const root = document.querySelector('#app')!;
-  root.innerHTML = '';
-  root.append(homePage.getContent()!);
-  homePage.dispatchComponentDidMount();
-};
+  try {
+    await AuthController.fetchUser();
+    await ChatController.getChats();
 
-export default renderDom;
+    Router.start();
+ 
+    if (!isProtectedRoute) {
+      Router.go(Routes.Chats)
+    }
+  } catch (e) {
+    Router.start();
 
-document.addEventListener('DOMContentLoaded', () => {
-  renderDom('/');
+    if (isProtectedRoute) {
+      Router.go(Routes.Index);
+    }
+  }
+
 });

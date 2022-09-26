@@ -7,6 +7,8 @@ type InputBlockProps = {
     name: string;
     text: string;
     type: string;
+    value?: string;
+    placeholder?: string;
     events?: {
       blur?: (e: { target: HTMLInputElement; }) => void;
       focus?: (e: { target: HTMLInputElement; }) => void;
@@ -24,9 +26,11 @@ export class InputBlock extends Block<InputBlockProps> {
         type: this.props.type,
         className: "input-field",
         events: this.props.events,
+        value: this.props.value,
+        placeholder: "."
     });
   }
-
+  
   render() {
     return this.compile(template, { ...this.props, styles });
   }

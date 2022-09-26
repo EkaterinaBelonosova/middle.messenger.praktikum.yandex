@@ -72,4 +72,46 @@
 }
 .profile-info-link:last-child {
     color: var(--profile-link-red);
+    background: none;
+    border: none;
+    cursor: pointer;
 }
+.form-edit-pass {
+    padding-top: 20px;
+    height: 280px;
+    top: 2rem;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 6px rgb(0 0 0 / 14%);
+    border-radius: 12px;
+    max-width: 340px;
+    margin-right: auto;
+    margin-left: auto;
+    position: relative; 
+}
+.form-wrapper {
+    height: 150px;
+    max-width: 340px;
+    background: #fff;
+    border-radius: 12px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    top: 2rem;
+    box-shadow: 0 0 6px #00000024;
+    padding-top: 20px;
+}
+.form-edit-user {
+    height: 500px;
+    max-width: 340px;
+    background: #fff;
+    border-radius: 12px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    top: 2rem;
+    box-shadow: 0 0 6px #00000024;
+    padding-top: 20px;
+}
+input::placeholder {
+    color:    #fff;
+  }

@@ -6,7 +6,7 @@ type ButtonProps = {
     text: string;
     className: string;
     events?: {
-      click: () => void;
+      click?: (e: Event) => void
     };
 }
 

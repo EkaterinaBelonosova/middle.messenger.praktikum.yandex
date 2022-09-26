@@ -11,13 +11,20 @@ type InputProps = {
       blur?: (e: { target: HTMLInputElement; }) => void;
       focus?: (e: { target: HTMLInputElement; }) => void;
     };
+    value?: string;
 }
 
 export class Input extends Block<InputProps> {
   public constructor(props: InputProps) {
     super(props);
   }
+  public getName() {
+    return (this.element as HTMLInputElement).name;
+  }
 
+  public getValue() {
+    return (this.element as HTMLInputElement).value;
+  }
   render() {
     return this.compile(template, { ...this.props, styles });
   }

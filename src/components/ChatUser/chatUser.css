@@ -31,6 +31,7 @@
     font-size: 13px;
     font-weight: 600;
     line-height: 13px;
+    flex: 1 0;
 }
 .chat-user-text {
     font-weight: 500;

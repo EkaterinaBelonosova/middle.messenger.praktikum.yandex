@@ -1,17 +1,18 @@
 import Block from '../../utils/Block';
 import template from './authorization.hbs';
 import { Button } from '../../components/Button';
+import { LinkBase } from '../../components/LinkBase';
 import { InputBlock } from '../../components/InputBlock';
-import { validate, validForm } from '../../utils/validators';
+import { Input } from '../../components/Input';
+import { validate, validForm, validFormData } from '../../utils/validators';
 import * as styles from './authorization.css';
-import renderDom from '../../index';
+import { SignupData } from '../../api/AuthAPI';
+import AuthController from '../../controllers/AuthController';
 
-type AuthPageProps = {
-    title: string;
-  }
-export class AuthPage extends Block<AuthPageProps> {
-    public constructor(props: AuthPageProps) {
-        super(props);
+
+export class AuthPage extends Block {
+    public constructor() {
+        super({});
     }
     init() {
         this.children.inputLogin = new InputBlock({
@@ -38,20 +39,20 @@ export class AuthPage extends Block<AuthPageProps> {
             events: {
                 click: () => {
                     if (validForm('form-auth')) {
-                        renderDom('/chats.hbs')
+                        this.onSubmit()
                     }   
                 },
             },
         });
-        this.children.linkSing = new Button({
-            text: 'Регистрация',
-            className: 'a-link-button',
-            events: {
-                click: () => {
-                    renderDom('/registration.hbs')
-                  },
-            }
-        });
+        this.children.linkSing = new LinkBase({
+            label: 'Регистрация',
+            to: '/sign-up',
+            className: 'a-link-button'
+          });
+    }
+    onSubmit() {
+        const data = validFormData('form-auth');
+        AuthController.signin(data as SignupData);
     }
     render() {
         return this.compile(template, {...this.props, styles });

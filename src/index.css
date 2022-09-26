@@ -58,4 +58,6 @@ input:focus:-ms-input-placeholder {
     outline: 0;
     outline-offset: 0;
 }
-
+.pd-10 {
+    padding: 10px;
+}
