@@ -1,12 +1,12 @@
-import API, { AuthAPI, SigninData, SignupData } from '../api/AuthAPI';
-import store from '../utils/Store';
-import router from '../utils/Router';
+import { AuthAPI, SigninData, SignupData } from "../api/AuthAPI";
+import store from "../utils/Store";
+import router from "../utils/Router";
 
 export class AuthController {
   private readonly api: AuthAPI;
 
   constructor() {
-    this.api = API;
+    this.api = new AuthAPI();
   }
 
   async signin(data: SigninData) {
@@ -14,7 +14,7 @@ export class AuthController {
       await this.api.signin(data);
       await this.fetchUser();
 
-      router.go('/messenger');
+      router.go("/messenger");
     } catch (e: any) {
       alert(e.reason);
       console.error(e);
@@ -27,7 +27,7 @@ export class AuthController {
 
       await this.fetchUser();
 
-      router.go('/settings');
+      router.go("/settings");
     } catch (e: any) {
       alert(e.reason);
       console.error(e);
@@ -36,14 +36,14 @@ export class AuthController {
 
   async fetchUser() {
     const user = await this.api.read();
-    store.set('user', user);
+    store.set("user", user);
   }
 
   async logout() {
     try {
       await this.api.logout();
 
-      router.go('/');
+      router.go("/");
     } catch (e: any) {
       console.error(e.message);
     }
@@ -62,8 +62,6 @@ export class AuthController {
       console.error(e.message);
     }
   }
-  
-
 }
 
 export default new AuthController();

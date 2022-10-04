@@ -1,12 +1,12 @@
-import BaseAPI from './BaseAPI';
+import HTTPTransport from "../utils/fetch";
 
 export interface TypesChat {
   title: string;
 }
 
 export interface TypesUsersChat {
-  users: number[]
-  chatId: number
+  users: number[];
+  chatId: number;
 }
 export interface User {
   first_name: string;
@@ -18,31 +18,30 @@ export interface User {
   avatar: string;
 }
 export interface Chat {
-  id: number,
-  title: string,
-  avatar: string,
-  unread_count: number,
+  id: number;
+  title: string;
+  avatar: string;
+  unread_count: number;
   last_message: {
-    user: User,
-    time: string
-    content: string
-  }
+    user: User;
+    time: string;
+    content: string;
+  };
 }
 
-export class ChatsAPI extends BaseAPI {
+export class ChatsAPI {
+  protected http: HTTPTransport;
+
   constructor() {
-    super();
+    this.http = new HTTPTransport();
   }
 
   read(): Promise<Chat> {
-    return this.http.get('/chats');
+    return this.http.get("/chats");
   }
-  /*getAllChats() {
-    return this.http.get('/chats');
-  }*/
-  
+
   createChat(data: TypesChat) {
-    return this.http.post('/chats', data);
+    return this.http.post("/chats", data);
   }
 
   getChat(id: number) {
@@ -50,25 +49,22 @@ export class ChatsAPI extends BaseAPI {
   }
 
   deleteChat(id: number) {
-    return this.http.delete('/chats', {chatId: id});
+    return this.http.delete("/chats", { chatId: id });
   }
 
-  SearchUserChat(data: string) {
-    return this.http.post('/user/search', {login: data});
+  searchUserChat(data: string) {
+    return this.http.post("/user/search", { login: data });
   }
 
   addUserToChat(data: TypesUsersChat) {
-    return this.http.put('/chats/users', data );
+    return this.http.put("/chats/users", data);
   }
 
   deleteUserFromChat(data: TypesUsersChat) {
-    return this.http.delete('/chats/users', data);
+    return this.http.delete("/chats/users", data);
   }
-  
-  /*read = undefined;*/
+
   create = undefined;
   update = undefined;
   delete = undefined;
 }
-
-export default new ChatsAPI();

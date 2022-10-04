@@ -25,7 +25,7 @@ input:focus {
 }
 
 .user-id {
-  width: 150px !important;
+  width: 150px;
 }
 .chat-input-add {
   background: var(--grey-search);

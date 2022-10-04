@@ -1,11 +1,11 @@
-import Block from '../../utils/Block';
-import template from './avatar.hbs';
+import Block from "../../utils/Block";
+import template from "./avatar.hbs";
 
 interface AvatarProps {
   link: string;
   events: {
-    click: (evt: Event) => void
-  }
+    click: (evt: Event) => void;
+  };
 }
 
 export class Avatar extends Block<AvatarProps> {

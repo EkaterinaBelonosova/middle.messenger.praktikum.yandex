@@ -1,4 +1,4 @@
-import BaseAPI from './BaseAPI';
+import HTTPTransport from "../utils/fetch";
 
 export interface EditPass {
   newPassword: string;
@@ -23,31 +23,31 @@ export interface User {
   avatar: string;
 }
 
-export class UserAPI extends BaseAPI {
+export class UserAPI {
+  protected http: HTTPTransport;
+
   constructor() {
-    super();
+    this.http = new HTTPTransport();
   }
 
   editUser(data: EditUser) {
-    return this.http.put('/user/profile', data);
+    return this.http.put("/user/profile", data);
   }
 
   editAvatar(data: any) {
-    return this.http.put('/user/profile/avatar', data);
+    return this.http.put("/user/profile/avatar", data);
   }
 
   editPass(data: EditPass) {
-    return this.http.put('/user/password', data );
+    return this.http.put("/user/password", data);
   }
 
   read(): Promise<User> {
-    return this.http.get('/auth/user');
+    return this.http.get("/auth/user");
   }
-  
+
   //read = undefined;
   create = undefined;
   update = undefined;
   delete = undefined;
 }
-
-export default new UserAPI();
