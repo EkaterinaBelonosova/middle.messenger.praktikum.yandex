@@ -40,27 +40,27 @@ export class ChatsAPI {
     return this.http.get("/chats");
   }
 
-  createChat(data: TypesChat) {
+  createChat(data: TypesChat):Promise<Response> {
     return this.http.post("/chats", data);
   }
 
-  getChat(id: number) {
+  getChat(id: number):Promise<Response> {
     return this.http.post(`/chats/token/${id}`);
   }
 
-  deleteChat(id: number) {
+  deleteChat(id: number):Promise<Response> {
     return this.http.delete("/chats", { chatId: id });
   }
 
-  searchUserChat(data: string) {
+  searchUserChat(data: string):Promise<Response> {
     return this.http.post("/user/search", { login: data });
   }
 
-  addUserToChat(data: TypesUsersChat) {
+  addUserToChat(data: TypesUsersChat):Promise<Response> {
     return this.http.put("/chats/users", data);
   }
 
-  deleteUserFromChat(data: TypesUsersChat) {
+  deleteUserFromChat(data: TypesUsersChat):Promise<Response> {
     return this.http.delete("/chats/users", data);
   }
 

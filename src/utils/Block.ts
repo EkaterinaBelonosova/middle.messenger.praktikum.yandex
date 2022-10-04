@@ -201,21 +201,18 @@ class Block<Props extends Record<string, any> = any> {
   }
 
   private _makePropsProxy(props: any) {
-    const self = this;
-
     return new Proxy(props, {
-      get(target, prop) {
+      get: (target, prop) => {
         const value = target[prop];
         return typeof value === "function" ? value.bind(target) : value;
       },
-      set(target: any, prop, value) {
-        //const oldTarget = { ...target }
+      set: (target, prop, value) => {
         target[prop] = value;
 
-        self.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
+        this.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
         return true;
       },
-      deleteProperty() {
+      deleteProperty: () => {
         throw new Error("Нет доступа");
       },
     });

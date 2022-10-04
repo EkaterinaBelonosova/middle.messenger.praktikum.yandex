@@ -7,7 +7,7 @@ export enum Methods {
 
 type TypesOptions = {
   method?: Methods;
-  data?: any;
+  data?: unknown;
   headers?: any;
 };
 

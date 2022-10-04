@@ -30,15 +30,15 @@ export class UserAPI {
     this.http = new HTTPTransport();
   }
 
-  editUser(data: EditUser) {
+  editUser(data: EditUser):Promise<Response> {
     return this.http.put("/user/profile", data);
   }
 
-  editAvatar(data: any) {
+  editAvatar(data: FormData):Promise<Response> {
     return this.http.put("/user/profile/avatar", data);
   }
 
-  editPass(data: EditPass) {
+  editPass(data: EditPass):Promise<Response> {
     return this.http.put("/user/password", data);
   }
 
