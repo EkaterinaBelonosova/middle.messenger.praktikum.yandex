@@ -1,15 +1,15 @@
-import Block from '../../utils/Block';
-import template from './link.hbs';
-import * as styles from './link.css';
+import Block from "../../utils/Block";
+import template from "./link.hbs";
+import * as styles from "./link.css";
 
 type LinkProps = {
-    url?: string;
-    text: string;
-    className: string;
-    events?: {
-      click: () => void;
-    };
-}
+  url?: string;
+  text: string;
+  className: string;
+  events?: {
+    click: () => void;
+  };
+};
 
 export class Link extends Block<LinkProps> {
   public constructor(props: LinkProps) {

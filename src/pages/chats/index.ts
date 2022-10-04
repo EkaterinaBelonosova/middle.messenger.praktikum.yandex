@@ -1,79 +1,151 @@
-import Block from '../../utils/Block';
-import template from './chats.hbs';
-import { Input } from '../../components/Input';
-import { Button } from '../../components/Button';
-import { ChatUser } from '../../components/ChatUser';
-import * as styles from './chats.css';
-import renderDom from '../../index';
+import Block from "../../utils/Block";
+import template from "./chats.hbs";
+import { Input } from "../../components/Input";
+import { ChatInput } from "../../components/ChatInput";
+import { ChatOptions } from "../../components/ChatOptions";
 
-type ChatsPageProps = {
-    title: string;
+import { Message } from "../../components/Message";
+
+import { Button } from "../../components/Button";
+import { chatUser } from "../../components/ChatUser";
+import { withStore } from "../../utils/Store";
+import { validFormData } from "../../utils/validators";
+
+import ChatController from "../../controllers/ChatController";
+import * as styles from "./chats.css";
+
+export type ChatInfo = {
+  last_message: {
+    content: string;
+  };
+  title: string;
+  id: number;
+  unread_count: number;
+};
+
+type MessageData = {
+  time: Date;
+  user_id: number;
+  content: string;
+};
+
+class ChatsPage extends Block {
+  protected initChildren() {
+    this.children.chatList = [];
+    const lengthText = 30
+    if (this.props?.allChats !== undefined) {
+      Object.values(this.props.allChats).forEach((chats: any) => {
+        const text = chats.last_message?.content.length > lengthText
+            ? `${chats.last_message?.content.slice(0, lengthText)}...`
+            : chats.last_message?.content;
+
+        this.children.chatList.push(
+          new chatUser({
+            name: chats.title,
+            text: text,
+            count_mess: chats.unread_count,
+            style: chats.unread_count > 0 ? "" : "none",
+            events: {
+              click: () => {
+                ChatController.getChat(
+                  chats.id,
+                  this.props.user.id,
+                  chats.title
+                );
+              },
+            },
+          })
+        );
+      });
+    }
+
+    if (this.props?.token !== undefined) {
+      this.children.header = new ChatOptions({
+        chatId: this.props.chatId,
+        nameChat: this.props.nameChat,
+      });
+    }
+
+    this.children.messages = [];
+
+    if (this.props?.chat !== undefined) {
+      this.props.chat.forEach((message: MessageData) => {
+        const date = new Date(message.time);
+        const isMyMessage = message.user_id === this.props.user.id;
+        this.children.messages.push(
+          new Message({
+            content: message.content,
+            time: `${date.getHours()}:${date.getMinutes()}`,
+            className: isMyMessage ? "message-outgoing" : "message-incoming",
+          })
+        );
+      });
+      this.children.messages.reverse()
+    }
+    this.children.inputMess = new Input({
+      name: "message",
+      type: "text",
+      className: "chat-input-mess",
+      placeholder: "Сообщение",
+    });
+    this.children.button = new Button({
+      text: ">",
+      className: "form-messages-button",
+      events: {
+        click: (evt) => {
+          evt.preventDefault();
+          const data = validFormData("chat-messages");
+          if (data?.message) {
+            ChatController.sendMessage(data as { message: string });
+          }
+        },
+      },
+    });
+    this.children.linkProfile = new Button({
+      text: "Профиль >",
+      className: "profile_link-button",
+      events: {
+        click: () => {
+          ChatController.profile();
+        },
+      },
+    });
+
+    this.children.buttonAddChat = new Button({
+      text: "Добавить чат",
+      className: "profile_link-button",
+      events: {
+        click: () => {
+          const data = validFormData("add-chat");
+          if (data?.title) {
+            ChatController.createChat(data);
+          }
+        },
+      },
+    });
+    this.children.inputChat = new Input({
+      name: "search",
+      type: "text",
+      className: "chat-input",
+      placeholder: "Поиск",
+    });
+    this.children.inputChatName = new ChatInput({
+      name: "title",
+      className: "chat-input-add",
+    });
+  }
+  render() {
+    return this.compile(template, { ...this.props, styles });
+  }
 }
 
-export class ChatsPage extends Block<ChatsPageProps> {
-    public constructor(props: ChatsPageProps) {
-        super(props);
-    }
-    init() {
-      this.children.ChatUser = new ChatUser({
-        name: "Имя",
-        text: "Тест",
-        time: "08:00",
-        count_mess: 3
-      });
-      this.children.ChatUser2 = new ChatUser({
-        name: "Имя2",
-        text: "Тест2",
-        time: "10:00",
-        count_mess: 2
-      });
-      this.children.inputChat = new Input({
-        name: "search",
-        type: "text",
-        className: "chat-input",
-        placeholder: "Поиск"
-      });
-      this.children.inputMess = new Input({
-        name: "messages",
-        type: "text",
-        className: "chat-input-mess",
-        placeholder: "Сообщение",
-        
-      });
-      this.children.button = new Button({
-        text: '>',
-        className: 'form-messages-button'
-      });
-      this.children.linkProfile = new Button({
-        text: 'Профиль >',
-        className: 'profile_link-button',
-        events: {
-            click: () => {
-                renderDom('/userSettings.hbs')
-              },
-        }
-      });
-      this.children.link404 = new Button({
-        text: '404 страница',
-        className: 'profile_link-button',
-        events: {
-            click: () => {
-                renderDom('/404.hbs')
-              },
-        }
-      });
-      this.children.link500 = new Button({
-        text: '500 страница',
-        className: 'profile_link-button',
-        events: {
-            click: () => {
-                renderDom('/500.hbs')
-              },
-        }
-      });
-      
-    }
-    render() {
-        return this.compile(template, {...this.props, styles });
-    }
-}
+const withChats = withStore((state) => ({
+  allChats: state.allChats,
+  chatId: state.chatId,
+  nameChat: state.nameChat,
+  token: state.token,
+  user: state.user,
+  chat: state.chat,
+}));
+
+export const ChatsPageS = withChats(ChatsPage);

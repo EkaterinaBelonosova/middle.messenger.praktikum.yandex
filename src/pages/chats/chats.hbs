@@ -1,28 +1,30 @@
 <div class="main-container">
-    <div class="chat-list">
-        <div class="profile_div">
-            {{{linkProfile}}}
-        </div>
-        <div class="chat-search">
-            {{{inputChat}}}
-        </div>
-        <div class="chats">
-            {{{ChatUser}}}
-            {{{ChatUser2}}}
-        </div>
+  <div class="chat-list">
+    <div class="profile_div">
+      {{{linkProfile}}}
     </div>
-    <div class="chat-choice">
-        <div class="window-messages">
-            {{{link404}}}
-            <br>
-            {{{link500}}}
-        </div>
-        <form class="form-messages">
-            <p class="mr ml" id="error_form-auth"></p>
-            <div class="chat-messages">
-                {{{inputMess}}}
-            </div>
-            {{{button}}}
-        </form>  
+    <div class="chat-search">
+      {{{inputChat}}}
     </div>
+    <div class="add-chat">
+      {{{inputChatName}}}
+      {{{buttonAddChat}}}
+    </div>
+    <div class="chats">
+      {{{chatList}}}
+    </div>
+  </div>
+  <div class="chat-choice">
+    {{{header}}}
+    <div class="window-messages">
+      {{{messages}}}
+    </div>
+    <form class="form-messages">
+      <p class="mr ml" id="error_form-auth"></p>
+      <div class="chat-messages">
+        {{{inputMess}}}
+      </div>
+      {{{button}}}
+    </form>
+  </div>
 </div>

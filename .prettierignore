@@ -1,0 +1,9 @@
+# Ignore artifacts:
+build
+coverage
+node_modules/
+dist
+.parcel-cache
+**/*.min.js
+/node_modules
+*.config.js

@@ -1,65 +1,66 @@
 .chat-menu-user {
-    display: flex;
-    height: 73px;
-    margin: 15px;
-    border-bottom: 1px solid var(--grey-border);
+  display: flex;
+  height: 73px;
+  margin: 15px;
+  border-bottom: 1px solid var(--grey-border);
 }
 .chat-menu-user:hover {
-    background-color: var(--grey-hover);
-    cursor: pointer;
-  }
-.chats .chat-menu-user:first-child {    
-    border-top: 1px solid var(--grey-border);
-    padding-top: 12px;
+  background-color: var(--grey-hover);
+  cursor: pointer;
+}
+.chats .chat-menu-user:first-child {
+  border-top: 1px solid var(--grey-border);
+  padding-top: 12px;
 }
 .chat-user-avatar {
-    background: var(--grey-search);
-    border-radius: 50%;
-    width: 47px;
-    height: 47px;
-    margin-right: 10px;
+  background: var(--grey-search);
+  border-radius: 50%;
+  width: 47px;
+  height: 47px;
+  margin-right: 10px;
 }
 .chat-user-block {
-    flex: 3 0 0%;
+  flex: 3 0 0%;
 }
 .chat-user-info {
-    text-align: right;
-    margin-left: auto;
-    flex: 1 0 0%;
+  text-align: right;
+  margin-left: auto;
+  flex: 1 0 0%;
 }
 .chat-user-name {
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 13px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 13px;
+  flex: 1 0;
 }
 .chat-user-text {
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 15px;
-    color: var(--grey-link);
-    margin-top: 4px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  color: var(--grey-link);
+  margin-top: 4px;
 }
 .chat-time {
-    font-weight: 500;
-    font-size: 9px;
-    line-height: 13px;
-    color: var(--grey-link);
-    vertical-align: top;
+  font-weight: 500;
+  font-size: 9px;
+  line-height: 13px;
+  color: var(--grey-link);
+  vertical-align: top;
 }
 .chat-count {
-    background: var(--profile-link-blue);
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background: var(--profile-link-blue);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .chat-count_mess {
-    color: var(--white-input);
-    font-weight: 500;
-    font-size: 11px;
-    line-height: 12px;
+  color: var(--white-input);
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 12px;
 }

@@ -1,7 +1,7 @@
 ### Проект "Чат"
 
 - npm install - установка зависимостей
-- npm run build - сборка 
+- npm run build - сборка
 - npm run dev - запуск Parcel
 - npm run start - запуск проекта локально на порту 3000
 
