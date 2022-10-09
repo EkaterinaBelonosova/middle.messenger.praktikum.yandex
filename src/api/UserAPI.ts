@@ -1,4 +1,4 @@
-import HTTPTransport from "../utils/fetch";
+import HTTPTransport from '../utils/fetch';
 
 export interface EditPass {
   newPassword: string;
@@ -30,20 +30,20 @@ export class UserAPI {
     this.http = new HTTPTransport();
   }
 
-  editUser(data: EditUser):Promise<Response> {
-    return this.http.put("/user/profile", data);
+  editUser(data: EditUser): Promise<Response> {
+    return this.http.put('/user/profile', data);
   }
 
-  editAvatar(data: FormData):Promise<Response> {
-    return this.http.put("/user/profile/avatar", data);
+  editAvatar(data: FormData): Promise<Response> {
+    return this.http.put('/user/profile/avatar', data);
   }
 
-  editPass(data: EditPass):Promise<Response> {
-    return this.http.put("/user/password", data);
+  editPass(data: EditPass): Promise<Response> {
+    return this.http.put('/user/password', data);
   }
 
   read(): Promise<User> {
-    return this.http.get("/auth/user");
+    return this.http.get('/auth/user');
   }
 
   //read = undefined;

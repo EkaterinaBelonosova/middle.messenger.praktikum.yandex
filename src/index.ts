@@ -1,26 +1,25 @@
-import { AuthPage } from "./pages/authorization";
-import { RegPage } from "./pages/registration";
-import { UserPage } from "./pages/userSettings";
-import { EditAvatar } from "./pages/userSettings/changeAvatar";
-import { EditPassword } from "./pages/userSettings/changePassword";
-import { UserEditPage } from "./pages/userSettings/changeSettings";
-import { ChatsPageS } from "./pages/chats";
-import Router from "./utils/Router";
-import store from "./utils/Store";
-import AuthController from "./controllers/AuthController";
-import ChatController from "./controllers/ChatController";
+import { AuthPage } from './pages/authorization';
+import { RegPage } from './pages/registration';
+import { UserPage } from './pages/userSettings';
+import { EditAvatar } from './pages/userSettings/changeAvatar';
+import { EditPassword } from './pages/userSettings/changePassword';
+import { UserEditPage } from './pages/userSettings/changeSettings';
+import { ChatsPageS } from './pages/chats';
+import Router from './utils/Router';
+import AuthController from './controllers/AuthController';
+import ChatController from './controllers/ChatController';
 
 enum Routes {
-  Index = "/",
-  Register = "/sign-up",
-  Profile = "/settings",
-  Avatar = "/settings/change-avatar",
-  PassWord = "/settings/change-pass",
-  EditProfile = "/settings/change-profile",
-  Chats = "/messenger",
+  Index = '/',
+  Register = '/sign-up',
+  Profile = '/settings',
+  Avatar = '/settings/change-avatar',
+  PassWord = '/settings/change-pass',
+  EditProfile = '/settings/change-profile',
+  Chats = '/messenger',
 }
 
-window.addEventListener("DOMContentLoaded", async () => {
+window.addEventListener('DOMContentLoaded', async () => {
   Router.use(Routes.Index, AuthPage)
     .use(Routes.Register, RegPage)
     .use(Routes.Profile, UserPage)

@@ -1,12 +1,12 @@
-import { EventBus } from "./EventBus";
-import { nanoid } from "nanoid";
+import { EventBus } from './EventBus';
+import { nanoid } from 'nanoid';
 
 class Block<Props extends Record<string, any> = any> {
   static EVENTS = {
-    INIT: "init",
-    FLOW_CDM: "flow:component-did-mount",
-    FLOW_CDU: "flow:component-did-update",
-    FLOW_RENDER: "flow:render",
+    INIT: 'init',
+    FLOW_CDM: 'flow:component-did-mount',
+    FLOW_CDU: 'flow:component-did-update',
+    FLOW_RENDER: 'flow:render',
   } as const;
 
   public id = nanoid(6);
@@ -88,17 +88,17 @@ class Block<Props extends Record<string, any> = any> {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
 
     Object.values(this.children).forEach((child) =>
-      child.dispatchComponentDidMount()
+      child.dispatchComponentDidMount(),
     );
   }
 
-  private _componentDidUpdate(oldProps: Props, newProps: Props) {
-    if (this.componentDidUpdate(oldProps, newProps)) {
+  private _componentDidUpdate() {
+    if (this.componentDidUpdate()) {
       this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
   }
 
-  protected componentDidUpdate(oldProps?: Props, newProps?: Props) {
+  protected componentDidUpdate() {
     return true;
   }
 
@@ -129,6 +129,7 @@ class Block<Props extends Record<string, any> = any> {
 
     this._addEvents();
   }
+
   protected initChildren() {}
 
   protected render(): DocumentFragment {
@@ -149,19 +150,19 @@ class Block<Props extends Record<string, any> = any> {
       ([key, child]: [string, Block<Props>]) => {
         if (Array.isArray(child)) {
           contextAndStubs[key] = child.map(
-            (item) => `<div data-id="${item.id}"></div>`
+            (item) => `<div data-id="${item.id}"></div>`,
           );
           return;
         }
         contextAndStubs[key] = `<div data-id="${child.id}"></div>`;
-      }
+      },
     );
 
-    const temp = document.createElement("template");
+    const temp = document.createElement('template');
     //const html = template(contextAndStubs);
 
     //temp.innerHTML = html;
-    temp.innerHTML = template(contextAndStubs).split(",").join("");
+    temp.innerHTML = template(contextAndStubs).split(',').join('');
 
     /*Object.entries(this.children).forEach(([_, component]) => {
       const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
@@ -186,9 +187,7 @@ class Block<Props extends Record<string, any> = any> {
         });
         return;
       }
-      const stub = temp.content.querySelector(
-        `[data-id="${child.id}"]`
-      ) as HTMLElement;
+      const stub = temp.content.querySelector(`[data-id="${child.id}"]`) as HTMLElement;
       if (!stub) return;
       stub.replaceWith(child.getContent()!);
     });
@@ -204,7 +203,7 @@ class Block<Props extends Record<string, any> = any> {
     return new Proxy(props, {
       get: (target, prop) => {
         const value = target[prop];
-        return typeof value === "function" ? value.bind(target) : value;
+        return typeof value === 'function' ? value.bind(target) : value;
       },
       set: (target, prop, value) => {
         target[prop] = value;
@@ -213,17 +212,17 @@ class Block<Props extends Record<string, any> = any> {
         return true;
       },
       deleteProperty: () => {
-        throw new Error("Нет доступа");
+        throw new Error('Нет доступа');
       },
     });
   }
 
   show() {
-    this.getContent()!.style.display = "block";
+    this.getContent()!.style.display = 'block';
   }
 
   hide() {
-    this.getContent()!.style.display = "none";
+    this.getContent()!.style.display = 'none';
   }
 }
 

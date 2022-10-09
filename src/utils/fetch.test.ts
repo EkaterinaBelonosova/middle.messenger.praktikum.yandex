@@ -1,4 +1,7 @@
-import sinon, { SinonFakeXMLHttpRequest, SinonFakeXMLHttpRequestStatic } from 'sinon';
+import sinon, {
+  SinonFakeXMLHttpRequest,
+  SinonFakeXMLHttpRequestStatic,
+} from 'sinon';
 import HTTPTransport from './fetch';
 import { expect } from 'chai';
 
@@ -13,22 +16,22 @@ describe('HTTPTransport', () => {
     // @ts-ignore
     global.XMLHttpRequest = xhr;
 
-    xhr.onCreate = ((request: SinonFakeXMLHttpRequest) => {
+    xhr.onCreate = (request: SinonFakeXMLHttpRequest) => {
       requests.push(request);
-    });
+    };
 
-    instance = new HTTPTransport('/auth');
+    instance = new HTTPTransport('/auth/user');
   });
 
   afterEach(() => {
     requests.length = 0;
-  })
+  });
 
   it('.get() should send GET request', () => {
-    instance.get('/user');
+    instance.get();
 
     const [request] = requests;
 
-    expect(request.method).to.eq('Get');
+    expect(request.method).to.eq('GET');
   });
 });

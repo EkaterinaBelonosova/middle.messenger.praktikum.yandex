@@ -1,11 +1,11 @@
 import { expect } from 'chai';
-import { set} from './set'
+import { set } from './set';
 
 describe('set', () => {
   it('should set a value by keypath', () => {
     const obj = {};
-    const keypath = "test";
-    const value = "some value";
+    const keypath = 'test';
+    const value = 'some value';
 
     set(obj, keypath, value);
 
@@ -13,8 +13,8 @@ describe('set', () => {
   });
   it('should return origin object if its not an object', () => {
     const obj = 'string';
-    const keypath = "test";
-    const value = "some value";
+    const keypath = 'test';
+    const value = 'some value';
 
     const result = set(obj, keypath, value);
 

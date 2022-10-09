@@ -1,4 +1,4 @@
-import Block from "./Block";
+import Block from './Block';
 import renderDom from './render';
 
 export class Route {
@@ -7,7 +7,7 @@ export class Route {
   constructor(
     private pathname: string,
     private readonly blockClass: typeof Block,
-    private readonly query: string
+    private readonly query: string,
   ) {}
 
   leave() {

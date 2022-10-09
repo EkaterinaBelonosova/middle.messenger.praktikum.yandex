@@ -1,6 +1,6 @@
-import Block from "../../utils/Block";
-import template from "./link.hbs";
-import * as styles from "./link.css";
+import Block from '../../utils/Block';
+import template from './link.hbs';
+import * as styles from './link.css';
 
 type LinkProps = {
   url?: string;

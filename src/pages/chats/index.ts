@@ -1,18 +1,18 @@
-import Block from "../../utils/Block";
-import template from "./chats.hbs";
-import { Input } from "../../components/Input";
-import { ChatInput } from "../../components/ChatInput";
-import { ChatOptions } from "../../components/ChatOptions";
+import Block from '../../utils/Block';
+import template from './chats.hbs';
+import { Input } from '../../components/Input';
+import { ChatInput } from '../../components/ChatInput';
+import { ChatOptions } from '../../components/ChatOptions';
 
-import { Message } from "../../components/Message";
+import { Message } from '../../components/Message';
 
-import { Button } from "../../components/Button";
-import { chatUser } from "../../components/ChatUser";
-import { withStore } from "../../utils/Store";
-import { validFormData } from "../../utils/validators";
+import { Button } from '../../components/Button';
+import { chatUser } from '../../components/ChatUser';
+import { withStore } from '../../utils/Store';
+import { validFormData } from '../../utils/validators';
 
-import ChatController from "../../controllers/ChatController";
-import * as styles from "./chats.css";
+import ChatController from '../../controllers/ChatController';
+import * as styles from './chats.css';
 
 export type ChatInfo = {
   last_message: {
@@ -32,10 +32,11 @@ type MessageData = {
 class ChatsPage extends Block {
   protected initChildren() {
     this.children.chatList = [];
-    const lengthText = 30
+    const lengthText = 30;
     if (this.props?.allChats !== undefined) {
       Object.values(this.props.allChats).forEach((chats: any) => {
-        const text = chats.last_message?.content.length > lengthText
+        const text =
+          chats.last_message?.content.length > lengthText
             ? `${chats.last_message?.content.slice(0, lengthText)}...`
             : chats.last_message?.content;
 
@@ -44,17 +45,17 @@ class ChatsPage extends Block {
             name: chats.title,
             text: text,
             count_mess: chats.unread_count,
-            style: chats.unread_count > 0 ? "" : "none",
+            style: chats.unread_count > 0 ? '' : 'none',
             events: {
               click: () => {
                 ChatController.getChat(
                   chats.id,
                   this.props.user.id,
-                  chats.title
+                  chats.title,
                 );
               },
             },
-          })
+          }),
         );
       });
     }
@@ -76,25 +77,25 @@ class ChatsPage extends Block {
           new Message({
             content: message.content,
             time: `${date.getHours()}:${date.getMinutes()}`,
-            className: isMyMessage ? "message-outgoing" : "message-incoming",
-          })
+            className: isMyMessage ? 'message-outgoing' : 'message-incoming',
+          }),
         );
       });
-      this.children.messages.reverse()
+      this.children.messages.reverse();
     }
     this.children.inputMess = new Input({
-      name: "message",
-      type: "text",
-      className: "chat-input-mess",
-      placeholder: "Сообщение",
+      name: 'message',
+      type: 'text',
+      className: 'chat-input-mess',
+      placeholder: 'Сообщение',
     });
     this.children.button = new Button({
-      text: ">",
-      className: "form-messages-button",
+      text: '>',
+      className: 'form-messages-button',
       events: {
         click: (evt) => {
           evt.preventDefault();
-          const data = validFormData("chat-messages");
+          const data = validFormData('chat-messages');
           if (data?.message) {
             ChatController.sendMessage(data as { message: string });
           }
@@ -102,8 +103,8 @@ class ChatsPage extends Block {
       },
     });
     this.children.linkProfile = new Button({
-      text: "Профиль >",
-      className: "profile_link-button",
+      text: 'Профиль >',
+      className: 'profile_link-button',
       events: {
         click: () => {
           ChatController.profile();
@@ -112,11 +113,11 @@ class ChatsPage extends Block {
     });
 
     this.children.buttonAddChat = new Button({
-      text: "Добавить чат",
-      className: "profile_link-button",
+      text: 'Добавить чат',
+      className: 'profile_link-button',
       events: {
         click: () => {
-          const data = validFormData("add-chat");
+          const data = validFormData('add-chat');
           if (data?.title) {
             ChatController.createChat(data);
           }
@@ -124,16 +125,17 @@ class ChatsPage extends Block {
       },
     });
     this.children.inputChat = new Input({
-      name: "search",
-      type: "text",
-      className: "chat-input",
-      placeholder: "Поиск",
+      name: 'search',
+      type: 'text',
+      className: 'chat-input',
+      placeholder: 'Поиск',
     });
     this.children.inputChatName = new ChatInput({
-      name: "title",
-      className: "chat-input-add",
+      name: 'title',
+      className: 'chat-input-add',
     });
   }
+
   render() {
     return this.compile(template, { ...this.props, styles });
   }

@@ -1,13 +1,13 @@
-import Block from "../../utils/Block";
-import template from "./userSettings.hbs";
-import { UserProfile } from "../../components/UserProfile";
-import { Link } from "../../components/Link";
-import { Button } from "../../components/Button";
-import { Avatar } from "../../components/Avatar";
-import { withStore } from "../../utils/Store";
-import UserController from "../../controllers/UserController";
-import AuthController from "../../controllers/AuthController";
-import * as styles from "./userSettings.css";
+import Block from '../../utils/Block';
+import template from './userSettings.hbs';
+import { UserProfile } from '../../components/UserProfile';
+import { Link } from '../../components/Link';
+import { Button } from '../../components/Button';
+import { Avatar } from '../../components/Avatar';
+import { withStore } from '../../utils/Store';
+import UserController from '../../controllers/UserController';
+import AuthController from '../../controllers/AuthController';
+import * as styles from './userSettings.css';
 
 export type User = {
   email: string;
@@ -29,38 +29,38 @@ class UserPageBase extends Block {
       },
     });
     this.children.userEmail = new UserProfile({
-      name: "Почта",
-      className: "profile-input",
+      name: 'Почта',
+      className: 'profile-input',
       value: this.props?.email,
     });
     this.children.userLogin = new UserProfile({
-      name: "Логин",
-      className: "profile-input",
+      name: 'Логин',
+      className: 'profile-input',
       value: this.props?.login,
     });
     this.children.userName = new UserProfile({
-      name: "Имя",
-      className: "profile-input",
+      name: 'Имя',
+      className: 'profile-input',
       value: this.props?.first_name,
     });
     this.children.userSecondName = new UserProfile({
-      name: "Фамилия",
-      className: "profile-input",
+      name: 'Фамилия',
+      className: 'profile-input',
       value: this.props?.second_name,
     });
     this.children.userDisplayName = new UserProfile({
-      name: "Имя в чате",
-      className: "profile-input",
+      name: 'Имя в чате',
+      className: 'profile-input',
       value: this.props?.display_name,
     });
     this.children.userPhone = new UserProfile({
-      name: "Телефон",
-      className: "profile-input",
+      name: 'Телефон',
+      className: 'profile-input',
       value: this.props?.phone,
     });
     this.children.linkEditData = new Link({
-      text: "Изменить данные",
-      className: "profile-info-link",
+      text: 'Изменить данные',
+      className: 'profile-info-link',
       events: {
         click: () => {
           UserController.userEdit();
@@ -68,8 +68,8 @@ class UserPageBase extends Block {
       },
     });
     this.children.linkEditPass = new Link({
-      text: "Изменить пароль",
-      className: "profile-info-link",
+      text: 'Изменить пароль',
+      className: 'profile-info-link',
       events: {
         click: () => {
           UserController.passEdit();
@@ -77,8 +77,8 @@ class UserPageBase extends Block {
       },
     });
     this.children.linkExit = new Button({
-      text: "Выйти",
-      className: "profile-info-link",
+      text: 'Выйти',
+      className: 'profile-info-link',
       events: {
         click: () => {
           AuthController.logout();
@@ -86,8 +86,8 @@ class UserPageBase extends Block {
       },
     });
     this.children.linkBack = new Button({
-      text: "<",
-      className: "a-link-button",
+      text: '<',
+      className: 'a-link-button',
       events: {
         click: () => {
           UserController.messenger();
@@ -95,6 +95,7 @@ class UserPageBase extends Block {
       },
     });
   }
+  
   render() {
     return this.compile(template, { ...this.props, styles });
   }

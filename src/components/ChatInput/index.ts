@@ -1,6 +1,6 @@
-import Block from "../../utils/Block";
-import template from "./chatInput.hbs";
-import * as styles from "./chatInput.css";
+import Block from '../../utils/Block';
+import template from './chatInput.hbs';
+import * as styles from './chatInput.css';
 
 type ChatInputProps = {
   name: string;
