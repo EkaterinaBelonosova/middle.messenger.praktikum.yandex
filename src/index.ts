@@ -21,7 +21,7 @@ enum Routes {
   Chats = '/messenger',
   Error404 = '/404',
   Error500 = '/500',
-  All = '*'
+  All = '*',
 }
 
 window.addEventListener('DOMContentLoaded', async () => {
@@ -34,7 +34,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     .use(Routes.Chats, ChatsPageS)
     .use(Routes.Error500, ErrorPage)
     .use(Routes.Error404, ErrorPage404)
-    .use(Routes.All, ErrorPage404)
+    .use(Routes.All, ErrorPage404);
 
   let isProtectedRoute = true;
 
