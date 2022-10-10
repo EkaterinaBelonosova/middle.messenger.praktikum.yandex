@@ -4,6 +4,7 @@ import sinon, {
 } from 'sinon';
 import HTTPTransport from './fetch';
 import { expect } from 'chai';
+import { data } from 'autoprefixer';
 
 describe('HTTPTransport', () => {
   let xhr: SinonFakeXMLHttpRequestStatic;
@@ -34,4 +35,30 @@ describe('HTTPTransport', () => {
 
     expect(request.method).to.eq('GET');
   });
-});
+
+  it('.post() should send POST request', () => {
+    instance.post('/auth/signin', data);
+
+    const [request] = requests;
+
+    expect(request.method).to.eq('POST');
+  });
+
+  it('.put() should send PUT request', () => {
+    instance.put('/chats/users', data);
+
+    const [request] = requests;
+
+    expect(request.method).to.eq('PUT');
+  });
+
+  it('.delete() should send DELETE request', () => {
+    instance.delete('/chats/users', data);
+
+    const [request] = requests;
+
+    expect(request.method).to.eq('DELETE');
+  });
+  
+  });
+  

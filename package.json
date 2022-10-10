@@ -3,7 +3,7 @@
   "description": "---",
   "version": "1.0.0",
   "devDependencies": {
-    "@anikin/parcel-transformer-handlebars": "1.0.5",
+    "@anikin/parcel-transformer-handlebars": "1.0.2",
     "@anikin/parcel-transformer-handlebars-precompile": "1.0.1",
     "@parcel/config-default": "2.7.0",
     "@types/chai": "4.3.3",
@@ -20,6 +20,7 @@
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-airbnb-typescript": "17.0.0",
     "eslint-plugin-import": "2.26.0",
+    "express-history-api-fallback": "2.2.1",
     "html-webpack-plugin": "5.5.0",
     "husky": "8.0.1",
     "jsdom": "20.0.1",

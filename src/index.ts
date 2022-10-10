@@ -5,6 +5,8 @@ import { EditAvatar } from './pages/userSettings/changeAvatar';
 import { EditPassword } from './pages/userSettings/changePassword';
 import { UserEditPage } from './pages/userSettings/changeSettings';
 import { ChatsPageS } from './pages/chats';
+import { ErrorPage404 } from './pages/404';
+import { ErrorPage } from './pages/500';
 import Router from './utils/Router';
 import AuthController from './controllers/AuthController';
 import ChatController from './controllers/ChatController';
@@ -17,6 +19,9 @@ enum Routes {
   PassWord = '/settings/change-pass',
   EditProfile = '/settings/change-profile',
   Chats = '/messenger',
+  Error404 = '/404',
+  Error500 = '/500',
+  All = '*'
 }
 
 window.addEventListener('DOMContentLoaded', async () => {
@@ -26,7 +31,10 @@ window.addEventListener('DOMContentLoaded', async () => {
     .use(Routes.Avatar, EditAvatar)
     .use(Routes.PassWord, EditPassword)
     .use(Routes.EditProfile, UserEditPage)
-    .use(Routes.Chats, ChatsPageS);
+    .use(Routes.Chats, ChatsPageS)
+    .use(Routes.Error500, ErrorPage)
+    .use(Routes.Error404, ErrorPage404)
+    .use(Routes.All, ErrorPage404)
 
   let isProtectedRoute = true;
 
@@ -53,3 +61,4 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
   }
 });
+

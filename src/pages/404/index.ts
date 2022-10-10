@@ -3,13 +3,7 @@ import template from './404.hbs';
 import { Error } from '../../components/Error';
 import * as styles from '../authorization/authorization.css';
 
-type ErrorPageProps = {
-  title: string;
-};
-export class ErrorPage404 extends Block<ErrorPageProps> {
-  public constructor(props: ErrorPageProps) {
-    super(props);
-  }
+export class ErrorPage404 extends Block {
   
   init() {
     this.children.error = new Error({

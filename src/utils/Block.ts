@@ -139,13 +139,6 @@ class Block<Props extends Record<string, any> = any> {
   protected compile(template: (context: any) => string, context: any) {
     const contextAndStubs = { ...context };
 
-    /*Object.entries(this.children).forEach(([name, component]) => {
-      if (Array.isArray(component)) {
-        contextAndStubs[name] = component.map((item) => `<div data-id="${item.id}"></div>`);
-      }
-      contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
-    });*/
-
     Object.entries(this.children).forEach(
       ([key, child]: [string, Block<Props>]) => {
         if (Array.isArray(child)) {
@@ -159,23 +152,8 @@ class Block<Props extends Record<string, any> = any> {
     );
 
     const temp = document.createElement('template');
-    //const html = template(contextAndStubs);
 
-    //temp.innerHTML = html;
     temp.innerHTML = template(contextAndStubs).split(',').join('');
-
-    /*Object.entries(this.children).forEach(([_, component]) => {
-      const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
-      
-      if (!stub) {
-        return;
-      }
-
-      component.getContent()?.append(...Array.from(stub.childNodes));
-
-      stub.replaceWith(component.getContent()!);
-
-    });*/
 
     Object.values(this.children).forEach((child: Block<Props>) => {
       if (Array.isArray(child)) {

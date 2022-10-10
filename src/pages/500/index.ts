@@ -2,13 +2,7 @@ import Block from '../../utils/Block';
 import template from './500.hbs';
 import { Error } from '../../components/Error';
 
-type ErrorPageProps = {
-  title: string;
-};
-export class ErrorPage extends Block<ErrorPageProps> {
-  public constructor(props: ErrorPageProps) {
-    super(props);
-  }
+export class ErrorPage extends Block {
   
   init() {
     this.children.error = new Error({

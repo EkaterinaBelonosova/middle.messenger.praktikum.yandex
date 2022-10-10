@@ -9,7 +9,8 @@ module.exports = {
   entry: ['./src/index.ts', './src/index.css'],
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: './js/bundle.[hash].js'
+    filename: './js/bundle.[hash].js',
+    publicPath: '/'
   },
   resolve: {
     extensions: ['.ts', '.js', 'json'],
