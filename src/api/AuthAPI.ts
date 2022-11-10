@@ -1,4 +1,4 @@
-import HTTPTransport from "../utils/fetch";
+import HTTPTransport from '../utils/fetch';
 
 export interface SigninData {
   login: string;
@@ -33,19 +33,19 @@ export class AuthAPI {
   }
 
   signin(data: SigninData) {
-    return this.http.post("/auth/signin", data);
+    return this.http.post('/auth/signin', data);
   }
 
   signup(data: SignupData) {
-    return this.http.post("/auth/signup", data);
+    return this.http.post('/auth/signup', data);
   }
 
   read(): Promise<User> {
-    return this.http.get("/auth/user");
+    return this.http.get('/auth/user');
   }
 
   logout() {
-    return this.http.post("/auth/logout");
+    return this.http.post('/auth/logout');
   }
 
   create = undefined;

@@ -1,6 +1,6 @@
-import Block from "../../utils/Block";
-import template from "./Input.hbs";
-import * as styles from "./Input.css";
+import Block from '../../utils/Block';
+import template from './Input.hbs';
+import * as styles from './Input.css';
 
 type InputProps = {
   name: string;
@@ -18,6 +18,7 @@ export class Input extends Block<InputProps> {
   public constructor(props: InputProps) {
     super(props);
   }
+
   public getName() {
     return (this.element as HTMLInputElement).name;
   }
@@ -25,6 +26,7 @@ export class Input extends Block<InputProps> {
   public getValue() {
     return (this.element as HTMLInputElement).value;
   }
+  
   render() {
     return this.compile(template, { ...this.props, styles });
   }

@@ -1,8 +1,8 @@
-import Block from "./Block";
+import Block from './Block';
 import { Route } from './Route';
 class Router {
   private static __instance: Router;
-  private routes: Route[] = [];
+  public routes: Route[] = [];
   private currentRoute: Route | null = null;
   private history = window.history;
 
@@ -50,7 +50,7 @@ class Router {
   }
 
   public go(pathname: string) {
-    this.history.pushState({}, "", pathname);
+    this.history.pushState({}, '', pathname);
 
     this._onRoute(pathname);
   }
@@ -68,4 +68,4 @@ class Router {
   }
 }
 
-export default new Router("#app");
+export default new Router('#app');

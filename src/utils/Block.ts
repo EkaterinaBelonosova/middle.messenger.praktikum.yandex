@@ -1,12 +1,12 @@
-import { EventBus } from "./EventBus";
-import { nanoid } from "nanoid";
+import { EventBus } from './EventBus';
+import { nanoid } from 'nanoid';
 
 class Block<Props extends Record<string, any> = any> {
   static EVENTS = {
-    INIT: "init",
-    FLOW_CDM: "flow:component-did-mount",
-    FLOW_CDU: "flow:component-did-update",
-    FLOW_RENDER: "flow:render",
+    INIT: 'init',
+    FLOW_CDM: 'flow:component-did-mount',
+    FLOW_CDU: 'flow:component-did-update',
+    FLOW_RENDER: 'flow:render',
   } as const;
 
   public id = nanoid(6);
@@ -88,17 +88,17 @@ class Block<Props extends Record<string, any> = any> {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
 
     Object.values(this.children).forEach((child) =>
-      child.dispatchComponentDidMount()
+      child.dispatchComponentDidMount(),
     );
   }
 
-  private _componentDidUpdate(oldProps: Props, newProps: Props) {
-    if (this.componentDidUpdate(oldProps, newProps)) {
+  private _componentDidUpdate() {
+    if (this.componentDidUpdate()) {
       this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
   }
 
-  protected componentDidUpdate(oldProps?: Props, newProps?: Props) {
+  protected componentDidUpdate() {
     return true;
   }
 
@@ -129,6 +129,7 @@ class Block<Props extends Record<string, any> = any> {
 
     this._addEvents();
   }
+
   protected initChildren() {}
 
   protected render(): DocumentFragment {
@@ -138,43 +139,21 @@ class Block<Props extends Record<string, any> = any> {
   protected compile(template: (context: any) => string, context: any) {
     const contextAndStubs = { ...context };
 
-    /*Object.entries(this.children).forEach(([name, component]) => {
-      if (Array.isArray(component)) {
-        contextAndStubs[name] = component.map((item) => `<div data-id="${item.id}"></div>`);
-      }
-      contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
-    });*/
-
     Object.entries(this.children).forEach(
       ([key, child]: [string, Block<Props>]) => {
         if (Array.isArray(child)) {
           contextAndStubs[key] = child.map(
-            (item) => `<div data-id="${item.id}"></div>`
+            (item) => `<div data-id="${item.id}"></div>`,
           );
           return;
         }
         contextAndStubs[key] = `<div data-id="${child.id}"></div>`;
-      }
+      },
     );
 
-    const temp = document.createElement("template");
-    //const html = template(contextAndStubs);
+    const temp = document.createElement('template');
 
-    //temp.innerHTML = html;
-    temp.innerHTML = template(contextAndStubs).split(",").join("");
-
-    /*Object.entries(this.children).forEach(([_, component]) => {
-      const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
-      
-      if (!stub) {
-        return;
-      }
-
-      component.getContent()?.append(...Array.from(stub.childNodes));
-
-      stub.replaceWith(component.getContent()!);
-
-    });*/
+    temp.innerHTML = template(contextAndStubs).split(',').join('');
 
     Object.values(this.children).forEach((child: Block<Props>) => {
       if (Array.isArray(child)) {
@@ -186,9 +165,7 @@ class Block<Props extends Record<string, any> = any> {
         });
         return;
       }
-      const stub = temp.content.querySelector(
-        `[data-id="${child.id}"]`
-      ) as HTMLElement;
+      const stub = temp.content.querySelector(`[data-id="${child.id}"]`) as HTMLElement;
       if (!stub) return;
       stub.replaceWith(child.getContent()!);
     });
@@ -196,15 +173,15 @@ class Block<Props extends Record<string, any> = any> {
     return temp.content;
   }
 
-  getContent() {
-    return this.element;
+  getContent(): HTMLElement {
+    return <HTMLElement> this.element;
   }
 
   private _makePropsProxy(props: any) {
     return new Proxy(props, {
       get: (target, prop) => {
         const value = target[prop];
-        return typeof value === "function" ? value.bind(target) : value;
+        return typeof value === 'function' ? value.bind(target) : value;
       },
       set: (target, prop, value) => {
         target[prop] = value;
@@ -213,17 +190,17 @@ class Block<Props extends Record<string, any> = any> {
         return true;
       },
       deleteProperty: () => {
-        throw new Error("Нет доступа");
+        throw new Error('Нет доступа');
       },
     });
   }
 
   show() {
-    this.getContent()!.style.display = "block";
+    this.getContent()!.style.display = 'block';
   }
 
   hide() {
-    this.getContent()!.style.display = "none";
+    this.getContent()!.style.display = 'none';
   }
 }
 

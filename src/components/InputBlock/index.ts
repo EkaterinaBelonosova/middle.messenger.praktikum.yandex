@@ -1,7 +1,7 @@
-import Block from "../../utils/Block";
-import template from "./inputBlock.hbs";
-import { Input } from "../Input";
-import * as styles from "./inputBlock.css";
+import Block from '../../utils/Block';
+import template from './inputBlock.hbs';
+import { Input } from '../Input';
+import * as styles from './inputBlock.css';
 
 type InputBlockProps = {
   name: string;
@@ -24,10 +24,10 @@ export class InputBlock extends Block<InputBlockProps> {
     this.children.input = new Input({
       name: this.props.name,
       type: this.props.type,
-      className: "input-field",
+      className: 'input-field',
       events: this.props.events,
       value: this.props.value,
-      placeholder: ".",
+      placeholder: '.',
     });
   }
 

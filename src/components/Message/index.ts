@@ -1,6 +1,6 @@
-import Block from "../../utils/Block";
-import template from "./message.hbs";
-import * as styles from "./message.css";
+import Block from '../../utils/Block';
+import template from './message.hbs';
+import * as styles from './message.css';
 
 interface Props {
   content: string;

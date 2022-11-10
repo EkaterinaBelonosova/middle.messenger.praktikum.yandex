@@ -1,6 +1,6 @@
-import Block from "../../utils/Block";
-import template from "./userProfile.hbs";
-import * as styles from "./userProfile.css";
+import Block from '../../utils/Block';
+import template from './userProfile.hbs';
+import * as styles from './userProfile.css';
 
 type UserProfileProps = {
   name: string;

@@ -1,9 +1,9 @@
-import { set } from "./set";
-import { EventBus } from "./EventBus";
-import Block from "./Block";
+import { set } from './set';
+import { EventBus } from './EventBus';
+import Block from './Block';
 
 export enum StoreEvents {
-  Updated = "updated",
+  Updated = 'updated',
 }
 
 export class Store extends EventBus {

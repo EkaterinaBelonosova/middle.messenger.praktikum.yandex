@@ -1,6 +1,6 @@
-import Block from "../../utils/Block";
-import template from "./chatUser.hbs";
-import * as styles from "./chatUser.css";
+import Block from '../../utils/Block';
+import template from './chatUser.hbs';
+import * as styles from './chatUser.css';
 
 type chatUserProps = {
   name: string;
@@ -17,6 +17,7 @@ export class chatUser extends Block<chatUserProps> {
   public constructor(props: chatUserProps) {
     super(props);
   }
+  
   render() {
     return this.compile(template, { ...this.props, styles });
   }

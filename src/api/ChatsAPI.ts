@@ -1,4 +1,4 @@
-import HTTPTransport from "../utils/fetch";
+import HTTPTransport from '../utils/fetch';
 
 export interface TypesChat {
   title: string;
@@ -37,31 +37,31 @@ export class ChatsAPI {
   }
 
   read(): Promise<Chat> {
-    return this.http.get("/chats");
+    return this.http.get('/chats');
   }
 
-  createChat(data: TypesChat):Promise<Response> {
-    return this.http.post("/chats", data);
+  createChat(data: TypesChat): Promise<Response> {
+    return this.http.post('/chats', data);
   }
 
-  getChat(id: number):Promise<Response> {
+  getChat(id: number): Promise<Response> {
     return this.http.post(`/chats/token/${id}`);
   }
 
-  deleteChat(id: number):Promise<Response> {
-    return this.http.delete("/chats", { chatId: id });
+  deleteChat(id: number): Promise<Response> {
+    return this.http.delete('/chats', { chatId: id });
   }
 
-  searchUserChat(data: string):Promise<Response> {
-    return this.http.post("/user/search", { login: data });
+  searchUserChat(data: string): Promise<Response> {
+    return this.http.post('/user/search', { login: data });
   }
 
-  addUserToChat(data: TypesUsersChat):Promise<Response> {
-    return this.http.put("/chats/users", data);
+  addUserToChat(data: TypesUsersChat): Promise<Response> {
+    return this.http.put('/chats/users', data);
   }
 
-  deleteUserFromChat(data: TypesUsersChat):Promise<Response> {
-    return this.http.delete("/chats/users", data);
+  deleteUserFromChat(data: TypesUsersChat): Promise<Response> {
+    return this.http.delete('/chats/users', data);
   }
 
   create = undefined;

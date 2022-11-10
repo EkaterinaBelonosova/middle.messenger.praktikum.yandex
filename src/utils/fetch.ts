@@ -1,8 +1,8 @@
 export enum Methods {
-  Get = "GET",
-  Put = "PUT",
-  Post = "POST",
-  Delete = "DELETE",
+  Get = 'GET',
+  Put = 'PUT',
+  Post = 'POST',
+  Delete = 'DELETE',
 }
 
 type TypesOptions = {
@@ -12,13 +12,17 @@ type TypesOptions = {
 };
 
 export default class HTTPTransport {
-  static API_URL = "https://ya-praktikum.tech/api/v2";
+  static API_URL = 'https://ya-praktikum.tech/api/v2';
   protected endpoint: string;
 
-  constructor() {
-    this.endpoint = `${HTTPTransport.API_URL}`;
+  constructor(endpoint?: string) {
+    if (endpoint === undefined) {
+      endpoint = '';
+    }
+    this.endpoint = `${HTTPTransport.API_URL}${endpoint}`;
   }
-  public get<Response>(path = "/"): Promise<Response> {
+  
+  public get<Response>(path = '/'): Promise<Response> {
     return this.request(this.endpoint + path);
   }
 
@@ -42,14 +46,14 @@ export default class HTTPTransport {
 
   private request<Response>(
     url: string,
-    options: TypesOptions = { method: Methods.Get }
+    options: TypesOptions = { method: Methods.Get },
   ): Promise<Response> {
     const { method, data } = options;
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.open(method as Methods, url);
 
-      xhr.onreadystatechange = (e: any) => {
+      xhr.onreadystatechange = () => {
         if (xhr.readyState === XMLHttpRequest.DONE) {
           if (xhr.status < 400) {
             resolve(xhr.response);
@@ -59,19 +63,19 @@ export default class HTTPTransport {
         }
       };
 
-      xhr.onabort = () => reject({ reason: "abort" });
-      xhr.onerror = () => reject({ reason: "network error" });
-      xhr.ontimeout = () => reject({ reason: "timeout" });
+      xhr.onabort = () => reject({ reason: 'abort' });
+      xhr.onerror = () => reject({ reason: 'network error' });
+      xhr.ontimeout = () => reject({ reason: 'timeout' });
 
       xhr.withCredentials = true;
-      xhr.responseType = "json";
+      xhr.responseType = 'json';
 
       if (method === Methods.Get || !data) {
         xhr.send();
       } else if (data instanceof FormData) {
         xhr.send(data);
       } else {
-        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify(data));
       }
     });

@@ -1,28 +1,29 @@
-import Block from "../../../utils/Block";
-import template from "./changeAvatar.hbs";
-import { Button } from "../../../components/Button";
-import UserController from "../../../controllers/UserController";
-import AuthController from "../../../controllers/AuthController";
-import { withStore } from "../../../utils/Store";
-import { Link } from "../../../components/Link";
-import * as styles from "../userSettings.css";
+import Block from '../../../utils/Block';
+import template from './changeAvatar.hbs';
+import { Button } from '../../../components/Button';
+import UserController from '../../../controllers/UserController';
+import AuthController from '../../../controllers/AuthController';
+import { withStore } from '../../../utils/Store';
+import * as styles from '../userSettings.css';
 
 export class EditAvatar extends Block<any> {
   constructor(props: any) {
     super(props);
   }
+
   onSubmit() {
-    const inputFile = document.getElementById("avatar") as HTMLInputElement;
+    const inputFile = document.getElementById('avatar') as HTMLInputElement;
     if (inputFile) {
       const data = new FormData();
-      data.append("avatar", (inputFile as any).files[0]);
+      data.append('avatar', (inputFile as any).files[0]);
       UserController.editAvatar(data as any);
     }
   }
+
   init() {
     this.children.buttonSave = new Button({
-      text: "Сохранить аватарку",
-      className: "a-link-button-blue",
+      text: 'Сохранить аватарку',
+      className: 'a-link-button-blue',
       events: {
         click: () => {
           this.onSubmit();
@@ -31,8 +32,8 @@ export class EditAvatar extends Block<any> {
     });
 
     this.children.linkBack = new Button({
-      text: "Назад",
-      className: "a-link-button",
+      text: 'Назад',
+      className: 'a-link-button',
       events: {
         click: () => {
           AuthController.back();
@@ -40,6 +41,7 @@ export class EditAvatar extends Block<any> {
       },
     });
   }
+  
   render() {
     return this.compile(template, { ...this.props, styles });
   }

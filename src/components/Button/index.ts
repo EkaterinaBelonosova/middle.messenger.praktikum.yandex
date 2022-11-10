@@ -1,6 +1,6 @@
-import Block from "../../utils/Block";
-import template from "./button.hbs";
-import * as styles from "./button.css";
+import Block from '../../utils/Block';
+import template from './button.hbs';
+import * as styles from './button.css';
 
 type ButtonProps = {
   text: string;
